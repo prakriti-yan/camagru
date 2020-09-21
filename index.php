@@ -1,4 +1,6 @@
-<?PHP session_start();?>
+<?PHP session_start();
+require './config/setup.php'
+?>
 
 <!DOCTYPE html>
 <html lang="en">
