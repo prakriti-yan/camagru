@@ -12,7 +12,7 @@ try{
 }
 
 try{
-	$conn = new PDO($DB_DSN, $DB_USER, $DB_PD);
+	$conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
 	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	$sql = 'CREATE TABLE IF NOT EXISTS `users` (
