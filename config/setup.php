@@ -1,10 +1,10 @@
 <?php
 
-// include 'database.php';
-$DB_DSN = 'mysql:dbname=camagru;host=127.0.0.1';
-// $DB_DSN = 'mysql:host=127.0.0.1';
-$DB_USER = 'root';
-$DB_PD = 'password';
+require 'database.php';
+
+// $DB_DSN = 'mysql:dbname=camagru;host=127.0.0.1';
+// $DB_USER = 'root';
+// $DB_PD = 'password';
 
 try{
 	$conn = new PDO($DB_DSN, $DB_USER, $DB_PD);
