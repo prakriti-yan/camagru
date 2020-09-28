@@ -1,6 +1,8 @@
-<? php
+<?php
 
-class Users{
+
+
+class Users {
 
 	private $db;
 	private $login;
@@ -12,8 +14,8 @@ class Users{
 
 	public function __construct($login, $pwd, $pwdVerif, $email, $token){
 		try {
-			require '../config/database.php';
-			$this->db = new PDO($DB_DNS, $DB_USER, $DB_PASSWORD);
+			require 'config/database.php';
+			$this->db = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
 			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->login=$login;
 			$this->pwd=$pwd;
@@ -37,6 +39,79 @@ class Users{
 			die('Error! Cannot find the user! '.$e->getMessage());
 		}
 	}
+
+	private function checkPwd(){
+		// if (strlen($this->pwd) < 8)
+		// 	return $this->msg =  "Your password needs to have at least 8 characters!";
+		if ($this->pwd != $this->pwdVerif)
+			return $this->msg =  "The passwords are not the same!";
+		if (!preg_match('/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}/', $this->pwd))
+			return $this->msg = 'Your password has to be of length between 8 and 32, and have at least one digit, one upcase letter and one lowercase letter!';
+	}
+
+	private function checkRequire(){
+		if (strlen($this->login) > 32)
+			return $this->msg = 'Your login name cannot exceed 32 characters!';
+		$existingUser = $this->getUser();
+		if ($existingUser)
+			return $this->msg = 'This login name already exist, please give a new one!';
+		$this->checkPwd();
+		if ($this->msg != null)
+			return;
+		if (!filter_var($this->email, FILTER_VALIDATE_EMAIL))
+			return $this->msg = 'Your email is not a valid email address!';
+	}
+
+	public function verifyUser(){
+		try{
+			$user = $this->getUser();
+			if (!$user)
+				return $this->msg = "The login entered does not belong to any registered account!";
+			if ($user['confirm'] == 0)
+				return $this->msg = "This account has not yet been validated by email!";
+			if ($user['password'  != hash('whirlpool', $this->pwd)])
+				return $this->msg = "The password is incorrect, please try again!";
+		}catch(PDOException $e){
+			die('Error: '.$e->getMessage());
+		}
+	}
+
+	public function sendConfirmEmail(){
+		$this->checkRequire();
+		if ($this->msg)
+			return;
+		$token = bin2hex(random_bytes(16));
+		$url = "localhost:3000/home.php?tken=" . $token;
+		date_default_timezone_set('Europe/Helsinki');
+		$date_create = date("Y-m-d H:i:s");
+		$date_expire = date("Y-m-d H:i:s", strtotime($date_create . ' + 3 days'));
+		try{
+			$request = $this->db->prepare("INSERT INTO `users` (`login`, `password`, `date_creation`, `token`, `token_expires`) VALUES (?, ?, ?, ?, ?, ?)");
+			$request->execute(array($this->login, hash('whirlpool', $this->pwd), $date_create, $token, $date_expire));
+			$request = $this->db->prepare("DELETE FROM `users` WHERE `token_expires` < NOW() AND `confirm` = 0");
+			$request->execute();
+			require '../function/sendConfirmEmail.php';
+
+		}catch(PDOException $e){
+			die('Error: '.$e->getMessage());
+		}
+	}
+
+	public function connectUser(){
+		try{
+			$request = $this->db->prepare("SELECT * FROM `users` WHERE `token` = ?");
+			$response = $request->execute(array($this->token));
+			$user = $request->fetch(PDO::FETCH_ASSOC);
+			if (!$user)
+				return $this->msg = "The token has already expired!";
+			$request = $this->db->prepare("UPDATE `users` SET `confirm`=?, `token`=?, `token_expires`=? WHERE `token`=?");
+			$request->execute(array(1, NULL, NULL, $this->token )); // HERE NEED SOME INVESTIGATION!
+			$this->msg = "Your accound has been validated now! Welcome " . $user['login']  . " !";
+		}catch(PDOException $e){
+			die('Error: '.$e->getMessage());
+		}
+	}
+
 
 }
 

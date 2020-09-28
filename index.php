@@ -1,8 +1,17 @@
-<?PHP session_start();
-require './config/setup.php';
+<?PHP 
+
+	session_start();
+
+	if (!isset($_SESSION['loggedInUser'])){
+		require './config/setup.php';
+		header("Location: home.php");
+	}else{
+		header("Location: webcam.php");
+	}
+
 ?>
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -14,4 +23,4 @@ require './config/setup.php';
 <p>Camgagu</p>
 	
 </body>
-</html>
+</html> -->
