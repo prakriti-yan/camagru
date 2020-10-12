@@ -6,7 +6,7 @@
 		require './config/setup.php';
 		header("Location: home.php");
 	}else{
-		header("Location: webcam.php");
+		header("Location: main.php");
 	}
 
 ?>
