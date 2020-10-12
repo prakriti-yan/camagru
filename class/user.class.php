@@ -19,7 +19,7 @@ class Users {
 			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->login=$login;
 			$this->pwd=$pwd;
-			$this->pwdVerify = $pwdVerif;
+			$this->pwdVerif = $pwdVerif;
 			$this->email = $email;
 			$this->token = $token;
 		}catch(PDOException $e){
@@ -86,11 +86,11 @@ class Users {
 		$date_create = date("Y-m-d H:i:s");
 		$date_expire = date("Y-m-d H:i:s", strtotime($date_create . ' + 3 days'));
 		try{
-			$request = $this->db->prepare("INSERT INTO `users` (`login`, `password`, `date_creation`, `token`, `token_expires`) VALUES (?, ?, ?, ?, ?, ?)");
-			$request->execute(array($this->login, hash('whirlpool', $this->pwd), $date_create, $token, $date_expire));
+			$request = $this->db->prepare("INSERT INTO `users` (`login`, `password`, `email`, `date_creation`, `token`, `token_expires`) VALUES (?, ?, ?, ?, ?, ?)");
+			$request->execute(array($this->login, hash('whirlpool', $this->pwd), $this->email, $date_create, $token, $date_expire));
 			$request = $this->db->prepare("DELETE FROM `users` WHERE `token_expires` < NOW() AND `confirm` = 0");
 			$request->execute();
-			require '../function/sendConfirmEmail.php';
+			require 'srcs/sendConfirmEmail.php';
 
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());
