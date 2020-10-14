@@ -7,6 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="static/img/android-chrome-192x192.png" type="image/png" sizes="64x64">
 	<title>Camagru - login</title>
 </head>
 <body>
