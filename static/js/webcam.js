@@ -3,22 +3,16 @@
 	var width = 320;
 	var height = 0;
 	var streaming = false;
-	var video = null;
-	var canvas = null;
-	var photo = null;
-	var startbutton = null;
 	var imgselected = 0;
+	var video = document.getElementById("video");
+	var canvas = document.getElementById("canvas");
+	var photo = document.getElementById("photo");
+	var startbutton = document.getElementById("startbutton");
+	var uploadbutton = document.getElementById("uploadbutton");
 	var img1 = document.getElementById("img1");
 	var img2 = document.getElementById("img2");
 	var img3 = document.getElementById("img3");
 	var img4 = document.getElementById("img4");
-
-
-	function start(){
-		video = document.getElementById("video");
-		canvas = document.getElementById("canvas");
-		photo = document.getElementById("photo");
-		startbutton = document.getElementById("startbutton");
 
 		navigator.mediaDevices.getUserMedia({video: true, audio: false})
 		.then(function(stream) {
@@ -52,7 +46,6 @@
 		}, false);
 	
 		clearpicture();
-	}
 	
 	function clearpicture(){
 		var context = canvas.getContext('2d');
@@ -66,22 +59,24 @@
 	function takepicture(){
 		if (imgselected != 0){
 			// var context = canvas.getContext('2d');
-			// if (width && height) {
+			if (width && height) {
 			// 	context.drawImage(video, 0, 0, canvas.width, canvas.height);
 			// 	var data = canvas.toDataURL("image/png");
 			// 	photo.setAttribute("src", data);
-			// }else{
-			// 	clearpicture();
-			// }
-			context = canvas.getContext('2d');
-			if (width && height) {
-				context.drawImage(video, 0, 0, canvas.width, canvas.height);
-				var data = canvas.toDataURL("image/png");
-				mergeImg(data);
+			
+			var newcanvas = document.createElement("canvas");
+			newcanvas.width = width;
+      		newcanvas.height = height;
+			canvas.width = width;
+      		canvas.height = height;
+			// context = canvas.getContext('2d');
+			// if (width && height) {
+				newcanvas.getContext("2d").drawImage(video, 0, 0, width, height);
+				var pic = newcanvas.toDataURL("image/png");
+				mergeImg(pic);
+				}else{
+				clearpicture();
 			}
-			else{
-					clearpicture();
-				}
 		}
 	}
 
@@ -89,20 +84,21 @@
 		var picdata = pic.replace("data:image/png;base64,", "");
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", "../srcs/mergeImg.php", true);
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.send("pic="+encodeURIComponent(picdata)+"&img="+imgselected);
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
-				alert(xhr.responseText);
-				// console.log("hello@#$!");
-				// var response = JSON.parse(xhr.responseText);
-				// console.log(response);
-				// response = "data:image/png;base64,"+response;
-				// image = new Image();
-				// image.src = response;
-				// image.onload = function(){
-				// 	convas.getContext('2d').drawImage(image, 0, 0, width, height);
-				// 	canvas.toDataURL('image/png');
-				// }
+				var response = JSON.parse(xhr.responseText);
+				response = "data:image/png;base64,"+response;
+				image = new Image();
+				image.src = response;
+				console.log(image);
+				image.onload = function(){
+					console.log(canvas);
+					canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+					var data = canvas.toDataURL('image/png');
+					photo.setAttribute("src", data);
+				}
 			}
 		}
 	}
@@ -143,7 +139,8 @@
 		ev.preventDefault;
 	}, false);
 
-
-	window.addEventListener('load', start, false);
+	uploadbutto.addEventListener("click", function(){
+		alert("Hello world");
+	})
 
 })();
