@@ -33,9 +33,9 @@ if (!isset($_SESSION['loggedInUser'])){
 		<p>
 		3️⃣ Or, upload a photo from your computer 💻
 		</p>
-		<input type="file" accept="image/*" name="uploadimg" id="uploadimg"><br/>
+		<input type="file" accept="image/*" name="uploadimg" id="uploadimg">
 		<button id="uploadbutton">upload</button><br /><br/>
-		<span>4️⃣ Finally, you can save your work below in the gallery 😇 </span>
+		<span>4️⃣ Finally, save your work below in the gallery 😌 </span>
 		<button id="savebutton">Save</button><br /><br />
 		<canvas id="canvas" style="display: none"></canvas> 
 		</div class="output">

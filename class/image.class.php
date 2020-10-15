@@ -9,7 +9,7 @@ class Images {
 
 	public function __construct($id_pic, $img, $login){
 		try{
-			require "config/database.php";
+			require "../config/database.php";
 			$this->db = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
 			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->id_pic = $id_pic;
@@ -32,20 +32,30 @@ class Images {
 		}
 	}
 
+	
+	
+
 	public function addImg(){
+		function console_log( $data ){
+			echo '<script>';
+			echo 'console.log('. json_encode( $data ) .')';
+			echo '</script>';
+		  }
+		
 		try{
 			date_default_timezone_set('Europe/Helsinki');
 			$date_creation = date('Y-m-d H:i:s');
-			$request = $this->db->prepare("INSERT INTO `images` (`login`, `img`, `date_creation`) VALUES (?, ?, ?)");
+			$request = $this->db->prepare("INSERT INTO `images` (`login`, `image`, `date_creation`) VALUES (?, ?, ?)");
 			$request->execute(array($this->login, $this->img, $date_creation));
 			$request = $this->db->query("SELECT `id_pic` FROM `images` WHERE `login` = '" . $this->login . "' AND `date_creation` = '" . $date_creation . "'");
 			$id_pic = $request->fetch(PDO::FETCH_ASSOC);
+			console_log($id_pic);
 			return $id_pic;
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());
 		}
 	}
-
+	
 	public function getImgByNB($start, $end){
 		try{
 			$request = $this->db->prepare("SELECT * FROM `images` ORDER BY `date_creation` DESC LIMIT" . $start . ", " . $end);

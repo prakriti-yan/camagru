@@ -16,6 +16,7 @@
 	var img3 = document.getElementById("img3");
 	var img4 = document.getElementById("img4");
 	var upload = 0;
+	var imgdata = 0;
 
 	navigator.mediaDevices.getUserMedia({video: true, audio: false})
 	.then(function(stream) {
@@ -124,6 +125,7 @@
 				var response = JSON.parse(xhr.responseText);
 				response = "data:image/png;base64,"+response;
 				image = new Image();
+				imgdata = response;
 				image.src = response;
 				image.onload = function(){
 					canvas.getContext('2d').drawImage(image, 0, 0, width, height);
@@ -133,6 +135,21 @@
 			}
 		}
 	}
+
+	savebutton.addEventListener("click", function(ev){
+		if (imgdata != 0){
+			var picdata = imgdata.replace("data:image/png;base64,", "");
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", "../srcs/saveImg.php", true);
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhr.send("pic="+encodeURIComponent(picdata));
+			xhr.onreadystatechange = function(){
+				
+			}
+
+			ev.preventDefault();
+		}
+	}, false);
 
 	img1.addEventListener("click", function(ev){
 		imgselected = 1;
@@ -170,7 +187,6 @@
 		ev.preventDefault;
 	}, false);
 
-	savebutton.addEventListener("click", function(){
-	})
+	
 
 })();
