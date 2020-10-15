@@ -20,25 +20,27 @@ if (!isset($_SESSION['loggedInUser'])){
 	<?php include 'header.php'; ?>
 	<div>
 		<div class="camera">
-			<p>To create an image in your gallery, first pick a sticker from below 😌 </p>
+			<p>✨💎 To create an artwork in Camagru ✨💎</p>
+			<p>1️⃣ First, pick a sticker from below 😌 </p>
 			<button id="img1" style=background-color:#ffffff><img src="static/img/img1.png" width=120></button>
 			<button id="img2" style=background-color:#ffffff><img src="static/img/img2.png" width=120></button>
 			<button id="img3" style=background-color:#ffffff><img src="static/img/img3.png" width=120></button>
 			<button id="img4" style=background-color:#ffffff><img src="static/img/img4.png" width=120></button><br /><br />
-			<span>Then take a picture using the camera 📸 </span>
+			<span>2️⃣ Then, take a picture using the camera 📸 </span>
 			<button id="startbutton">Capture</button><br /><br />
 			<video id="video">Your brower does not support Video element.</video><br />	
 		</div>
 		<p>
-		Or, you can upload a photo here 💻
+		3️⃣ Or, upload a photo from your computer 💻
 		</p>
-		<input><br/><br/>
+		<input type="file" accept="image/*" name="uploadimg" id="uploadimg"><br/>
+		<button id="uploadbutton">upload</button><br /><br/>
+		<span>4️⃣ Finally, you can save your work below in the gallery 😇 </span>
+		<button id="savebutton">Save</button><br /><br />
 		<canvas id="canvas" style="display: none"></canvas> 
 		</div class="output">
 			<img id="photo" >
 		</div><br/>
-		<span>Finally, upload your work into your gallery 🤳 👯‍♀️</span>
-		<button id="uploadbutton">Upload</button><br /><br />
 	</div>
 	<script src="static/js/webcam.js"></script>
 </body>

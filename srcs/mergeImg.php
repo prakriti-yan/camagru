@@ -7,10 +7,10 @@ $src = imagecreatefrompng("../static/img/img" . $_POST['img'] .".png");
 imagealphablending($src, false);
 imagesavealpha($src, true);
 
-if ($_POST['img'] == 1 || $_POST['img'] == 3)
+// if ($_POST['img'] == 1 || $_POST['img'] == 3)
   imagecopy($dest, $src, 10, 10, 0, 0, 100, 100);
-else
-  imagecopy($dest, $src, 160, 160, 0, 0, 100, 100);
+// else
+  // imagecopy($dest, $src, 160, 160, 0, 0, 100, 100);
 
 ob_start();
 imagejpeg($dest, null, 100);
