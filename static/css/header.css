@@ -1,0 +1,35 @@
+#header{
+	width: 1500px;
+	background: #F7C1C1;
+	border-radius: 10px;
+}
+
+#title{
+	font-size: 60px;
+	margin-left: 20px;
+	/* text-align: center; */
+	font-style: italic;
+	color: #FFFFFF;
+	text-shadow: 4px 3px 0px #7A7A7A;
+}
+
+#nav{
+	text-align: left;
+}
+#nav li{
+	display: inline;
+}
+
+li a{
+	color: #000;
+  	padding: 0px 16px;
+	text-decoration: none;
+	font-size: 18px;
+
+	
+}
+
+li a:hover {
+	background-color: #8B6B82;
+	color: white;
+  }

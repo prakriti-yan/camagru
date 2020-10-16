@@ -68,8 +68,10 @@
 	
 	function clearpicture(){
 		var context = canvas.getContext('2d');
-		context.fillStyle = "#FFFFFF";
-		context.fillRect(0, 0, canvas.width, canvas.height);
+		// context.fillStyle = "#F7C1C1";
+		context.font = "5px Arial";
+		context.fillText("Your artwork is shown here 💚",canvas.width, canvas.height);
+		// context.fillRect(0, 0, canvas.width, canvas.height);
 
 		var data = canvas.toDataURL("image/png");
 		photo.setAttribute('src', data);
@@ -153,7 +155,7 @@
 
 	img1.addEventListener("click", function(ev){
 		imgselected = 1;
-		img1.setAttribute("style", "background-color:#e6c747");
+		img1.setAttribute("style", "background-color:#F7C1C1");
 		img2.setAttribute("style", "background-color:#ffffff");
 		img3.setAttribute("style", "background-color:#ffffff");
 		img4.setAttribute("style", "background-color:#ffffff");
@@ -163,7 +165,7 @@
 	img2.addEventListener("click", function(ev){
 		imgselected = 2;
 		img1.setAttribute("style", "background-color:#ffffff");
-		img2.setAttribute("style", "background-color:#e6c747");
+		img2.setAttribute("style", "background-color:#F7C1C1");
 		img3.setAttribute("style", "background-color:#ffffff");
 		img4.setAttribute("style", "background-color:#ffffff");
 		ev.preventDefault;
@@ -173,7 +175,7 @@
 		imgselected = 3;
 		img1.setAttribute("style", "background-color:#ffffff");
 		img2.setAttribute("style", "background-color:#ffffff");
-		img3.setAttribute("style", "background-color:#e6c747");
+		img3.setAttribute("style", "background-color:#F7C1C1");
 		img4.setAttribute("style", "background-color:#ffffff");
 		ev.preventDefault;
 	}, false);
@@ -183,7 +185,7 @@
 		img1.setAttribute("style", "background-color:#ffffff");
 		img2.setAttribute("style", "background-color:#ffffff");
 		img3.setAttribute("style", "background-color:#ffffff");
-		img4.setAttribute("style", "background-color:#e6c747");
+		img4.setAttribute("style", "background-color:#F7C1C1");
 		ev.preventDefault;
 	}, false);
 
