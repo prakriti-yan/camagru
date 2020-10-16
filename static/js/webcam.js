@@ -148,6 +148,7 @@
 			xhr.onreadystatechange = function(){
 				if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
 					var res = JSON.parse(xhr.responseText);
+					// console.log(res);
 					addMini(res['id_pic'], imgdata);
 				}
 			}
@@ -156,9 +157,24 @@
 		}
 	}, false);
 
-	function addMini($id_pic, $imgdata){
+	function addMini(id_pic, imgdata){
+		var div = document.createElement("DIV");
+    	div.setAttribute("class", "displaypic");
+		var img = document.createElement("IMG");
+		img.setAttribute("src", imgdata);
+		img.setAttribute("class", "minipic left");
+		var del = document.createElement("IMG");
+		del.setAttribute("src", "static/img/del.png");
+		del.setAttribute("class", "delpic");
+		del.setAttribute("id", "del_"+id_pic);
+		del.setAttribute("onclick", "deleteImg("+id_pic+")");
+		var side = document.getElementById("sidecontent");
+		side.insertBefore(div, side.childNodes[0]);
+		div.insertBefore(del, div.childNodes[0]);
+		div.insertBefore(img, div.childNodes[0]);
 		
-	}
+		
+	}	
 
 	img1.addEventListener("click", function(ev){
 		imgselected = 1;
@@ -199,3 +215,12 @@
 	
 
 })();
+
+// this function has to be outside of the onload function!!
+function deleteImg(id_pic){
+	document.getElementById("del_"+id_pic).parentNode.remove();
+	console.log(id_pic);
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "delImg.php?id_pic="+id_pic, true);
+	xhr.send();
+}

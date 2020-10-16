@@ -1,6 +1,5 @@
 <?php 
 
-// include(dirname(__FILE__)."class/image.class.php");
 require 'class/image.class.php';
 session_start();
 $rawimg = $_POST['pic'];

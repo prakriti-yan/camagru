@@ -36,12 +36,6 @@ class Images {
 	
 
 	public function addImg(){
-		function console_log( $data ){
-			echo '<script>';
-			echo 'console.log('. json_encode( $data ) .')';
-			echo '</script>';
-		  }
-		
 		try{
 			date_default_timezone_set('Europe/Helsinki');
 			$date_creation = date('Y-m-d H:i:s');
@@ -49,7 +43,6 @@ class Images {
 			$request->execute(array($this->login, $this->img, $date_creation));
 			$request = $this->db->query("SELECT `id_pic` FROM `images` WHERE `login` = '" . $this->login . "' AND `date_creation` = '" . $date_creation . "'");
 			$id_pic = $request->fetch(PDO::FETCH_ASSOC);
-			console_log($id_pic);
 			return $id_pic;
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());
@@ -100,6 +93,7 @@ class Images {
 
 	public function deleteImg(){
 		try{
+			print_r("we are here");
 			$request = $this->db->prepare("DELETE FROM `images` WHERE `id_pic` = ? AND `login` = ?");
 			$request->execute(array($this->id_pic, $this->login));
 		}catch(PDOException $e){

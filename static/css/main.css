@@ -48,14 +48,31 @@ body{
 
 #sideheader{
 	font-size: 20px;
-	/* background-color: #836980; */
 	background-color: #B0A6B9;
 	text-align: center;
 	color: white;
 }
 
 .minipic{
- width: 250px;
+ width: 200px;
+}
+
+.displaypic{
+	float: left;
+	  position: relative;
+	  top: 0;
+	  left: 0;
+	  margin-left: 10px;
+	  /* width: 500px; */
+	/* text-align: center; */
+}
+
+
+.delpic{
+	position: absolute;
+  	cursor: pointer;
+  	top: 5px;
+  	right: 5px;
 }
 
 #footer{

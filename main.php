@@ -24,15 +24,18 @@ if (!isset($_SESSION['loggedInUser'])){
 		<!-- <div id="main"> -->
 		<div id = "sidebar">
 			<div id="sideheader">✨ Your creation 💎</div><br/>
+			<div id="sidecontent">
 			<?php
-				require 'class/image.class.php';
-				$db = new Images("", "", $_SESSION['loggedInUser']);
-				$imgs = $db->getImgByLogin();
-				foreach ($imgs as $img): ?>
-				<div>
-					<img class="minipic" src="data:image/png;base64,<?=base64_encode($img['image'])?>">
+			require 'class/image.class.php';
+			$db = new Images("", "", $_SESSION['loggedInUser']);
+			$imgs = $db->getImgByLogin();
+			foreach ($imgs as $img): ?>
+				<div class="displaypic">
+					<img class="minipic left" src="data:image/png;base64,<?=base64_encode($img['image'])?>">
+					<img class = "delpic" id="del_<?=$img['id_pic']?>" onclick="deleteImg(<?=$img['id_pic']?>)" src="static/img/del.png" >
 				</div>
 			<? endforeach; ?>
+			</div>
 		</div>
 		<div id="content">
 			<div id="contentheader"> ✨ Create an artwork in Camagru 💎 </div>
@@ -57,8 +60,8 @@ if (!isset($_SESSION['loggedInUser'])){
 			<hr>
 			<a href='https://github.com/prakriti-yan' class="left bottom"  target="_blank"><strong>Yan Yan 2020</strong></a>
 		</div>
-	</div>
-	<script src="static/js/webcam.js"></script>
+	</div>	
+	<script type="application/javascript" src="static/js/webcam.js">	</script>	
 </body>
 
 </html>
