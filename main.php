@@ -21,8 +21,18 @@ if (!isset($_SESSION['loggedInUser'])){
 <body>
 	<div id = "container">
 	<?php include 'header.php'; ?>
+		<!-- <div id="main"> -->
 		<div id = "sidebar">
-			<div id="sideheader">✨ Your creation 💎</div>
+			<div id="sideheader">✨ Your creation 💎</div><br/>
+			<?php
+				require 'class/image.class.php';
+				$db = new Images("", "", $_SESSION['loggedInUser']);
+				$imgs = $db->getImgByLogin();
+				foreach ($imgs as $img): ?>
+				<div>
+					<img class="minipic" src="data:image/png;base64,<?=base64_encode($img['image'])?>">
+				</div>
+			<? endforeach; ?>
 		</div>
 		<div id="content">
 			<div id="contentheader"> ✨ Create an artwork in Camagru 💎 </div>
@@ -42,10 +52,10 @@ if (!isset($_SESSION['loggedInUser'])){
 			<canvas id="canvas" style="display: none"></canvas> 
 			<img id="photo" class="left">
 		</div>
+		<!-- </div> -->
 		<div id="footer">
-			<!-- <br/> -->
 			<hr>
-			<a href='https://github.com/prakriti-yan' target="_blank"><strong>Yan Yan 2020</strong></a>
+			<a href='https://github.com/prakriti-yan' class="left bottom"  target="_blank"><strong>Yan Yan 2020</strong></a>
 		</div>
 	</div>
 	<script src="static/js/webcam.js"></script>

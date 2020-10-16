@@ -142,16 +142,23 @@
 		if (imgdata != 0){
 			var picdata = imgdata.replace("data:image/png;base64,", "");
 			var xhr = new XMLHttpRequest();
-			xhr.open("POST", "../srcs/saveImg.php", true);
+			xhr.open("POST", "../saveImg.php", true);
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhr.send("pic="+encodeURIComponent(picdata));
 			xhr.onreadystatechange = function(){
-				
+				if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+					var res = JSON.parse(xhr.responseText);
+					addMini(res['id_pic'], imgdata);
+				}
 			}
 
 			ev.preventDefault();
 		}
 	}, false);
+
+	function addMini($id_pic, $imgdata){
+		
+	}
 
 	img1.addEventListener("click", function(ev){
 		imgselected = 1;

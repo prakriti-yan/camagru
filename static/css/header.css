@@ -1,7 +1,8 @@
 #header{
 	width: 1500px;
 	background: #F7C1C1;
-	border-radius: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 }
 
 #title{
