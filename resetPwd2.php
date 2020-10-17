@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camagru - reset password</title>
+	<link rel="stylesheet" href="/static/css/header.css">
+	<link rel="stylesheet" href="/static/css/connect.css">
+	<title>Camagru - reset password</title>
 </head>
 <body>
+	<div id="container">
 	<?php require "header.php"; ?>
     <h2>Reset your password:</h2>
 	<form class="" action="#" method="POST">
@@ -25,5 +28,6 @@
 			echo '<p style="color:red;">' . $db->msg . '</p>';
 	}
 	?>
+	</div>
 </body>
 </html>

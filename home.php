@@ -8,13 +8,16 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="static/img/android-chrome-192x192.png" type="image/png" sizes="64x64">
+	<link rel="stylesheet" href="/static/css/header.css">
+	<link rel="stylesheet" href="/static/css/connect.css">
 	<title>Camagru - login</title>
 </head>
 <body>
-	<h1>Camagru</h1>
-	<div>
+	<div id="container">
+	<?php require 'header.php'?>
+	<div class="section">
 		<h2>Log in</h2>
-		<form method="POST" action="">
+		<form method="POST" action="" >
 			<table border="0" align="center" cellpadding="5">
 			<tr>
 				<td align="right">Login: </td>
@@ -46,7 +49,7 @@
 	}
 
 	?>
-	<div>
+	<div class="section">
 		<h2>Register</h2>
 		<form method="POST" action="">
 			<table border="0" align="center" cellpadding="5">
@@ -71,6 +74,7 @@
 			</tr>
 			</table>
 		</form>
+	</div>
 	</div>
 	<?php
 	if (!empty(htmlentities($_POST['new_login'])) && !empty($_POST['new_pwd']) && !empty($_POST['new_pwdVerif'])

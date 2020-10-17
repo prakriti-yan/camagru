@@ -1,0 +1,28 @@
+body{
+	text-align: center;
+}
+
+#container{
+	margin: 0 auto;
+	text-align: left;
+    width: 1500px;
+    height: 1000px;
+	border-radius: 10px;
+	background-color: rgb(233, 233, 247);
+}
+
+.left{
+	margin-left: 20px;
+}
+
+#section{
+    /* float: left; */
+    text-align: center;
+	width: 500px;
+}
+
+h2 {
+    font-style: italic;
+    color: #a68fb8;
+    text-shadow: 1px 1px 0px white;
+} 
