@@ -68,11 +68,8 @@
 	
 	function clearpicture(){
 		var context = canvas.getContext('2d');
-		// context.fillStyle = "#F7C1C1";
 		context.font = "5px Arial";
 		context.fillText("Your artwork is shown here 💚",canvas.width, canvas.height);
-		// context.fillRect(0, 0, canvas.width, canvas.height);
-
 		var data = canvas.toDataURL("image/png");
 		photo.setAttribute('src', data);
 	}
@@ -142,7 +139,7 @@
 		if (imgdata != 0){
 			var picdata = imgdata.replace("data:image/png;base64,", "");
 			var xhr = new XMLHttpRequest();
-			xhr.open("POST", "../saveImg.php", true);
+			xhr.open("POST", "../srcs/saveImg.php", true);
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhr.send("pic="+encodeURIComponent(picdata));
 			xhr.onreadystatechange = function(){
@@ -164,7 +161,7 @@
 		img.setAttribute("src", imgdata);
 		img.setAttribute("class", "minipic left");
 		var del = document.createElement("IMG");
-		del.setAttribute("src", "static/img/del.png");
+		del.setAttribute("src", "../static/img/del.png");
 		del.setAttribute("class", "delpic");
 		del.setAttribute("id", "del_"+id_pic);
 		del.setAttribute("onclick", "deleteImg("+id_pic+")");
@@ -219,8 +216,7 @@
 // this function has to be outside of the onload function!!
 function deleteImg(id_pic){
 	document.getElementById("del_"+id_pic).parentNode.remove();
-	console.log(id_pic);
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", "delImg.php?id_pic="+id_pic, true);
+	xhr.open("GET", "../srcs/delImg.php?id_pic="+id_pic, true);
 	xhr.send();
 }

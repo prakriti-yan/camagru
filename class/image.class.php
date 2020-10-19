@@ -9,7 +9,7 @@ class Images {
 
 	public function __construct($id_pic, $img, $login){
 		try{
-			require "config/database.php";
+			require "../config/database.php";
 			$this->db = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
 			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->id_pic = $id_pic;
@@ -62,7 +62,7 @@ class Images {
 
 	public function getImgByNBByLogin($start, $end){
 		try{
-			$request = $this->db->prepare("SELECT * FROM `images` WHERE `login`= ? ORDER BY `date_creation` DESC LIMIT" . $start . ", " . $end);
+			$request = $this->db->prepare("SELECT * FROM `images` WHERE `login`= ? ORDER BY `date_creation` DESC LIMIT " . $start . ", " . $end);
 			$response = $request->execute(array($this->login));
 			$imgs = $request->fetchAll(PDO::FETCH_ASSOC);
 			return $imgs;

@@ -14,7 +14,7 @@ class Users {
 
 	public function __construct($login, $pwd, $pwdVerif, $email, $token){
 		try {
-			require 'config/database.php';
+			require '../config/database.php';
 			$this->db = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
 			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->login=$login;

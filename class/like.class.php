@@ -8,7 +8,7 @@ class Likes {
 
 	public function __construct($id_pic, $login){
 		try {
-			require "config/datebase.php";
+			require "../config/database.php";
 			$this->db = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
 			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->id_pic = $id_pic;
@@ -34,7 +34,7 @@ class Likes {
 			date_default_timezone_set("Europe/Helsinki");
 			$date_creation = date("Y-m-d H:i:s");
 			$request = $this->db->prepare("INSERT INTO `likes` (`id_pic`, `login`, `date_creation`) VALUES (?,?,?)");
-			$request->execute($this->id_pic, $this->login, $date_creation);
+			$request->execute(array($this->id_pic, $this->login, $date_creation));
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());
 		}

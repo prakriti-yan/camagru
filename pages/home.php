@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	require './class/user.class.php';
+	require '../class/user.class.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,8 +8,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="static/img/android-chrome-192x192.png" type="image/png" sizes="64x64">
-	<link rel="stylesheet" href="/static/css/header.css">
-	<link rel="stylesheet" href="/static/css/connect.css">
+	<link rel="stylesheet" href="../static/css/header.css">
+	<link rel="stylesheet" href="../static/css/connect.css">
 	<title>Camagru - login</title>
 </head>
 <body>
@@ -44,7 +44,7 @@
 			echo '<div style="color:red;">' . $db->msg . '</div>';
 		else{
 			$_SESSION['loggedInUser'] = $login;
-			echo '<script> location.replace("./index.php"); </script>';
+			echo '<script> location.replace("../index.php"); </script>';
 		}
 	}
 

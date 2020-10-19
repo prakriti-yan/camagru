@@ -1,0 +1,34 @@
+.gallerysection{
+	text-align: center;
+}
+
+.mediumpic{
+	width: 250px;
+	margin-top: 10px;
+}
+
+#container{
+	margin: 0 auto;
+	text-align: center;
+	width: 1500px;
+	height: 1000px;
+	border-radius: 10px;
+	background-color: lavender;
+	/* position: absolute; */
+	
+}
+
+.delpic{
+	position: absolute;
+  	cursor: pointer;
+  	top: 5px;
+  	right: 405px;
+}
+
+.displaypic{
+	float: center;
+	  position: relative;
+	  /* top: 0; */
+	  /* left: 0; */
+	  margin-top: 10px;
+}
