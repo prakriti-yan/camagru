@@ -14,7 +14,6 @@
 	height: 1000px;
 	border-radius: 10px;
 	background-color: lavender;
-	/* position: absolute; */
 	
 }
 
@@ -22,13 +21,13 @@
 	position: absolute;
   	cursor: pointer;
   	top: 5px;
-  	right: 405px;
+  	right: 5px;
 }
 
 .displaypic{
-	float: center;
+	float: left;
 	  position: relative;
-	  /* top: 0; */
-	  /* left: 0; */
-	  margin-top: 10px;
+	  top: 0;
+	  left: 0;
+	  margin-left: 10px;
 }

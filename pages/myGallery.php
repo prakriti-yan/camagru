@@ -20,7 +20,7 @@ if ($_SESSION['loggedInUser'] === null)
 	<?php
 		require '../class/image.class.php';
 		$db = new Images("", "", $_SESSION['loggedInUser']);
-		$nb = 6;
+		$nb = 3;
 		$page = isset($_GET['page']) ? $_GET['page'] : 1;
 		$nbOfImg = $db->countNBByLogin();
 		$nbOfPage = ceil($nbOfImg / $nb); // ceil(), round the fraction up!
@@ -30,11 +30,11 @@ if ($_SESSION['loggedInUser'] === null)
 		<?elseif($page > $nbOfPage || !preg_match('/^[0-9]*$/', $page)):
 			echo '<script>header("Location: mygallery.php?page=1")</script>';
 		else:
-			// print_r("here we are");
 			$imgs = $db->getImgByNBByLogin(($page - 1) * $nb, $nb);
-			// print_r($imgs);
+
 			require '../class/comment.class.php';
 			require '../class/like.class.php';
+			
 			foreach ($imgs as $img):
 				$id_pic = $img['id_pic'];
 				$like = new Likes($id_pic, $_SESSION['loggedInUser']);
@@ -56,17 +56,16 @@ if ($_SESSION['loggedInUser'] === null)
 					<span class="nblike" id="nblike_<?=$id_pic?>"><?=$nbOfLike?> Likes</span>
 				</div>
 				<div id="comments_<?=$id_pic?>">
-						<? foreach ($comments as $cmt): ?>
-							<div class="comment"><b><?=$_SESSION['loggedInUser']?> </b><?=$cmt['comment']?></div>
-						<?endforeach;?>
+					<? foreach ($comments as $cmt): ?>
+						<div class="comment"><b><?=$cmt['login']?> </b><?=$cmt['comment']?></div>
+					<?endforeach;?>
 				</div>
 				<form method="post">
 						<input class="text" class="input" id="new_cmt_<?=$id_pic?>" name ="new_cmt_<?=$id_pic?>" onkeypress="{if (event.keyCode === 13) {event.preventDefault(); addCmt(<?=$id_pic?>, this, '<?=$_SESSION['loggedInUser']?>')}}"
 						placeholder="Write a comment here...">
 				</form>
-			</div><br/>
+			</div>
 	<?endforeach; ?>
-	<!-- <br/> -->
 	<div class="page">
 		<? if ($page != 1):?>
 			<a href="myGallery.php?page=<?=($page - 1)?>">☜</a>

@@ -51,7 +51,7 @@ class Images {
 	
 	public function getImgByNB($start, $end){
 		try{
-			$request = $this->db->prepare("SELECT * FROM `images` ORDER BY `date_creation` DESC LIMIT" . $start . ", " . $end);
+			$request = $this->db->prepare("SELECT * FROM `images` ORDER BY `date_creation` DESC LIMIT " . $start . ", " . $end);
 			$response = $request->execute();
 			$imgs = $request->fetchAll(PDO::FETCH_ASSOC);
 			return $imgs;
