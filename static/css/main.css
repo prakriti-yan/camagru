@@ -2,6 +2,10 @@ body{
 	text-align: center;
 }
 
+#flex{
+	display: flex;
+}
+
 #container{
 	margin: 0 auto;
 	text-align: left;
@@ -14,8 +18,7 @@ body{
 
 #content{
 	float: left;
-	width: 60%;
-	/* background-color: #B0A6B9; */
+	width: 55%;
 }
 
 #contentheader{
@@ -42,9 +45,12 @@ body{
 }
 
 #sidebar{
-	float: right;
-	width: 40%;
+	/* float: left; */
+	width: 45%;
+	/* text-align: center; */
+	flex:0 auto;
 }
+
 
 #sideheader{
 	font-size: 20px;
@@ -54,19 +60,30 @@ body{
 	margin-top: 15px;
 }
 
+
+#sidecontent{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+
+.displaypic{
+	flex: 0 auto;
+	float: left;
+	position: relative;
+	width: 300px;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 20px;	
+	margin-top: 20px;
+}
+
 .minipic{
 	width:100%;
 }
 
-.displaypic{
-	float: left;
-	position: relative;
-	width: 45%;
-	margin-left: 2.5%;
-	margin-right: 2.5%;
-	margin-bottom: 5%;	
-	margin-top: 20px;
-}
 
 .delpic{
 	position: absolute;
@@ -85,4 +102,21 @@ body{
 
 hr{
 	border: 1px solid  #B0A6B9;
+}
+
+@media screen and (max-width: 990px){
+	#flex { flex-wrap: wrap; flex-direction: column; align-items: center;}
+	#content { width: 100%; }
+	#sidebar{ width: 100%; }
+}
+
+
+
+
+@media screen and (max-width: 660px){
+	#flex { flex-wrap: wrap; flex-direction: column; align-items: center;}
+	
+	#content { width: 100%; }
+	#sidebar{ width: 100%; }
+	#sidecontent{flex-wrap: wrap; flex-direction: column;}
 }

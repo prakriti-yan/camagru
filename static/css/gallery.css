@@ -17,7 +17,6 @@
 }
 
 #main{
-	/* float: left; */
 	width: 100%;
 	text-align: center;
 }
@@ -50,14 +49,16 @@ form{
 .delpic{
 	position: absolute;
   	cursor: pointer;
-  	top: 30px;
-  	right: 10px;
+  	top: 5px;
+  	right: 5px;
 }
 
 .name{
 	text-align: left;
-	font-size: 18px;
+	font-size: 20px;
 	font-style: italic;
+	margin-top: 2px;
+	margin-bottom: 2px;
     color:#a77272;
     text-shadow: 1px 1px 0px white;
 }
@@ -65,18 +66,16 @@ form{
 .displaypic{
 	float: left;
 	  position: relative;
-	  width: 50%;
+	  width: 30%;
 	  text-align: center;
 	  top: 0;
 	  left: 0;
-	  margin-left: 25%;
-	  margin-right: 25%;
+	  margin-left: 35%;
+	  margin-right: 35%;
 	  margin-top: 2%;
 	  margin-bottom: 3%;
 	  border: 10px solid #a77272;
-  /* border-right: 1rem solid #B0A6B9; */
-  /* border-bottom: 1rem solid #B0A6B9; */
-  /* border-left: 1rem solid #a67c52; */
+
 }
 
 .displaypic div{
@@ -86,6 +85,7 @@ form{
 .img{
 	/* position: absolute; */
 	width: 100%;
+	
 }
 
 #footer{
@@ -99,3 +99,20 @@ form{
 hr{
 	border: 1px solid  #B0A6B9;
 }
+
+@media screen and (max-width: 990px){
+	.displaypic{
+		  width: 50%;
+		  margin-left: 25%;
+		  margin-right: 25%;
+	}
+}
+
+@media screen and (max-width: 660px){
+	.displaypic{
+		  width: 60%;
+		  margin-left: 20%;
+		  margin-right: 20%;
+	}
+}
+

@@ -27,8 +27,6 @@ class Users {
 		}
 	}
 
-
-
 	private function getUser(){
 		try{
 			$request = $this->db->prepare("SELECT * FROM `users` WHERE `login` = ?");
@@ -41,8 +39,6 @@ class Users {
 	}
 
 	private function checkPwd(){
-		// if (strlen($this->pwd) < 8)
-		// 	return $this->msg =  "Your password needs to have at least 8 characters!";
 		if ($this->pwd != $this->pwdVerif)
 			return $this->msg =  "The passwords are not the same!";
 		if (!preg_match('/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}/', $this->pwd))
@@ -82,7 +78,6 @@ class Users {
 			return;
 		$token = bin2hex(random_bytes(16));
 		$url = "localhost:3000/pages/home.php?tken=" . $token;
-		// print_r($url);
 		date_default_timezone_set('Europe/Helsinki');
 		$date_create = date("Y-m-d H:i:s");
 		$date_expire = date("Y-m-d H:i:s", strtotime($date_create . ' + 3 days'));
@@ -107,7 +102,7 @@ class Users {
 				return $this->msg = "The token has already expired!";
 			$request = $this->db->prepare("UPDATE `users` SET `confirm`=?, `token`=?, `token_expires`=? WHERE `token`=?");
 			$request->execute(array(1, NULL, NULL, $this->token )); // HERE NEED SOME INVESTIGATION!
-			$this->msg = "Your accound has been validated now," . $user['login']  . " . Please log in!";
+			$this->msg = "Your accound has been validated now, " . $user['login']  . " . Please log in!";
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());
 		}

@@ -7,6 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="../static/img/android-chrome-192x192.png" type="image/png" sizes="64x64">
 	<link rel="stylesheet" href="../static/css/gallery.css">
 	<link rel="stylesheet" href="../static/css/header.css">
 	<title>Camagru - gallery</title>
@@ -53,7 +54,7 @@
 					<button class="like" onclick="addLike(<?=$id_pic?>)"><img id="like_<?=$id_pic?>" src="../static/img/heart_red.png"></button>
 				<?endif;?>
 				<label for="new_cmt+<?=$id_pic?>" class="comment"><img id="cmt_<?=$id_pic?>" src="../static/img/comment.png"></label>
-				<span class="nblike" id="nblike_<?=$id_pic?>"><?=$nbOfLike?> Likes</span>
+				<span class="nblike" id="nblike_<?=$id_pic?>"><?=$nbOfLike?> likes</span>
 			</div>
 			<div id="comments_<?=$id_pic?>">
 				<?foreach ($comments as $cmt):?>
@@ -61,7 +62,7 @@
 				<?endforeach;?>
 			</div>
 			<form method="post">
-				<input class="text" class="input" id="new_cmt_<?=$id_pic?>" name ="new_cmt_<?=$id_pic?>" onkeypress="{if (event.keyCode === 13) {event.preventDefault(); addCmt(<?=$id_pic?>, this, '<?=$_SESSION['loggedInUser']?>')}}"
+				<input class="text" class="input" style="width:98%;"id="new_cmt_<?=$id_pic?>" name ="new_cmt_<?=$id_pic?>" onkeypress="{if (event.keyCode === 13) {event.preventDefault(); addCmt(<?=$id_pic?>, this, '<?=$_SESSION['loggedInUser']?>')}}"
 					placeholder="Write a comment here...">
 			</form>
 			</div>

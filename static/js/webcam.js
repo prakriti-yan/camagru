@@ -1,8 +1,6 @@
 
 (function() {
-	// var width = 400;
-	var containerWidth = document.getElementById("content").clientWidth;
-	var width = 0.60*containerWidth;
+	var width = 400;
 	var height = 0;
 	var streaming = false;
 	var imgselected = 0;
@@ -64,8 +62,14 @@
 	});
 
 	uploadbutton.addEventListener("click", function(){
-		if (upload != 0){
-			takepicture(0);
+		if (imgselected == 0){
+			alert("Choose a sticker first :)");
+		}else{
+			if (upload != 0){
+				takepicture(0);
+			}else{
+				alert("Choose a picture to upload :)");
+			}
 		}
 	})
 	
@@ -114,6 +118,8 @@
 					mergeImg(pic);
 				}
 			}
+		}else{
+			alert("Choose a sticker first :)");
 		}
 	}
 
@@ -155,6 +161,8 @@
 			}
 
 			ev.preventDefault();
+		}else{
+			alert("Create a post to save :)");
 		}
 	}, false);
 

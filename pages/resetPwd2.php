@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="../static/img/android-chrome-192x192.png" type="image/png" sizes="64x64">
 	<link rel="stylesheet" href="/static/css/header.css">
 	<link rel="stylesheet" href="/static/css/connect.css">
 	<title>Camagru - reset password</title>
@@ -13,8 +14,8 @@
 	<div class="section height">
     <h2>Reset your password:</h2>
 	<form class="" action="#" method="POST">
-		New password: <input type="password" name="new_pwd" value=""><br/>
-		Confirm new password: <input type="password" name="new_pwdVerif" value=""><br/>
+		New password: <input type="password" name="new_pwd" value="" required><br/>
+		Confirm new password: <input type="password" name="new_pwdVerif" value="" required><br/>
 		<input class="button" type = "submit" name= "submit" value="OK">
 	</form>
 	<?php

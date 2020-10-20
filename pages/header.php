@@ -8,7 +8,7 @@
 				<li><a href="gallery.php?page=1">Gallery</a></li>
 				<li><a href="logout.php">Log out</a></li>
 			<? else: ?>
-				<a href="home.php">Connect</a>
+				<li><a href="home.php">Connect</a></li>
 			<? endif; ?>
 		</ul>
 	</div>
