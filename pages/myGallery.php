@@ -45,7 +45,9 @@ if ($_SESSION['loggedInUser'] === null)
 				$comment = new Comments($id_pic, "", "");
 				$comments = $comment->getCmt();
 				?>
+			
 			<div class="displaypic">
+				<div class=name> <b><?=$img['login']?></b> </div>
 				<img class="img" src="data:image/jpeg;base64,<?=base64_encode($img['image'])?>" >
 				<img class = "delpic" id="del_<?=$img['id_pic']?>" onclick="deleteImg(<?=$img['id_pic']?>)" src="../static/img/del.png">
 				<div class="likeComment">
@@ -68,6 +70,7 @@ if ($_SESSION['loggedInUser'] === null)
 				</form>
 			</div>
 		<?endforeach; ?>
+		<br/><br/>
 		<div class="page">
 			<? if ($page != 1):?>
 				<a href="myGallery.php?page=<?=($page - 1)?>">☜</a>

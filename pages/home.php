@@ -75,6 +75,10 @@
 			</table>
 		</form>
 	</div>
+	<div id="footer">
+		<hr>
+		<a href='https://github.com/prakriti-yan' class="left bottom"  target="_blank"><strong>Yan Yan 2020</strong></a>
+	</div>
 	</div>
 	<?php
 	if (!empty(htmlentities($_POST['new_login'])) && !empty($_POST['new_pwd']) && !empty($_POST['new_pwdVerif'])

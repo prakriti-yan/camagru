@@ -81,7 +81,7 @@ class Users {
 		if ($this->msg)
 			return;
 		$token = bin2hex(random_bytes(16));
-		$url = "localhost:3000/home.php?tken=" . $token;
+		$url = "localhost:3000/pages/home.php?tken=" . $token;
 		// print_r($url);
 		date_default_timezone_set('Europe/Helsinki');
 		$date_create = date("Y-m-d H:i:s");
@@ -91,7 +91,7 @@ class Users {
 			$request->execute(array($this->login, hash('whirlpool', $this->pwd), $this->email, $date_create, $token, $date_expire));
 			$request = $this->db->prepare("DELETE FROM `users` WHERE `token_expires` < NOW() AND `confirm` = 0");
 			$request->execute();
-			require 'srcs/sendConfirmEmail.php';
+			require '../srcs/sendConfirmEmail.php';
 
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());
@@ -121,7 +121,7 @@ class Users {
 				return $this->msg = "This login name does not exist!";
 			$email = $user['email'];
 			$token = bin2hex(random_bytes(16));
-			$url = "localhost:3000/resetPwd2.php?tken=" . $token;
+			$url = "localhost:3000/pages/resetPwd2.php?tken=" . $token;
 			date_default_timezone_set('Europe/Helsinki');
 			$date_create = date("Y-m-d H:i:s");
 			$date_expire = date("Y-m-d H:i:s", strtotime($date_create . ' + 3 days'));
@@ -129,7 +129,7 @@ class Users {
 			$request->execute(array($token, $date_expire, $this->login));
 			$request = $this->db->prepare("UPDATE `users` SET `token`=?, `token_expires`=? WHERE `token_expires` < NOW() AND `confirm` = 1");
 			$request->execute(array(NULL, NULL));
-			require 'srcs/sendResetEmail.php';
+			require '../srcs/sendResetEmail.php';
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());
 		}

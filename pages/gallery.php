@@ -14,8 +14,9 @@
 <body>
 	<div id = "container">
 	<?php include "header.php"?>
-	<!-- <h2>Gallery</h2> -->
-	<div id="contentheader">✨ Gallery 💎</div><br/>
+	<div id="main">
+			<div id="contentheader">✨ Gallery 💎</div>
+			<div id="content">
 	<?php
 		require '../class/image.class.php';
 		$db = new Images("", "", "");
@@ -43,8 +44,8 @@
 				?>
 				
 			<div class = "displaypic">
-				<img src="data:image/jpeg;base64,<?=base64_encode($img['image'])?>" >
-			
+				<div class=name> <b><?=$img['login']?></b> </div>
+				<img class="img" src="data:image/jpeg;base64,<?=base64_encode($img['image'])?>" >
 			<div class="likeComment">
 				<?if ($recordOfLike == null):?>
 					<button class="like" onclick="addLike(<?=$id_pic?>)"><img id="like_<?=$id_pic?>" src="../static/img/heart.png"></button>
@@ -65,6 +66,7 @@
 			</form>
 			</div>
 			<?endforeach;?>
+			<br/><br/>	
 		<div class="page">
 		<? if ($page != 1):?>
 			<a href="gallery.php?page=<?=($page - 1)?>">☜</a>
@@ -74,7 +76,13 @@
 			<a href="gallery.php?page=<?=($page + 1)?>">☞</a>
 		<?endif;?>
 	</div>
-			<?endif;?>
+	</div>
+	<?endif;?>
+	</div>
+	<div id="footer">
+			<hr>
+			<a href='https://github.com/prakriti-yan' class="left bottom"  target="_blank"><strong>Yan Yan 2020</strong></a>
+	</div>
 	</div>
 	<script type="application/javascript" src="../static/js/gallery.js"></script>
 </body>
