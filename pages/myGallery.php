@@ -15,9 +15,11 @@ if ($_SESSION['loggedInUser'] === null)
 </head>
 <body>
 	<div id = "container">
-	<?php include "header.php"?>
-	<h2>My gallery</h2>
-	<?php
+		<?php include "header.php"?>
+		<div id="main">
+			<div id="contentheader">✨ My gallery 💎</div>
+			<div id="content">
+		<?php
 		require '../class/image.class.php';
 		$db = new Images("", "", $_SESSION['loggedInUser']);
 		$nb = 3;
@@ -44,7 +46,7 @@ if ($_SESSION['loggedInUser'] === null)
 				$comments = $comment->getCmt();
 				?>
 			<div class="displaypic">
-				<img src="data:image/jpeg;base64,<?=base64_encode($img['image'])?>" >
+				<img class="img" src="data:image/jpeg;base64,<?=base64_encode($img['image'])?>" >
 				<img class = "delpic" id="del_<?=$img['id_pic']?>" onclick="deleteImg(<?=$img['id_pic']?>)" src="../static/img/del.png">
 				<div class="likeComment">
 					<? if ($recordOfLike == null) :?>
@@ -61,21 +63,27 @@ if ($_SESSION['loggedInUser'] === null)
 					<?endforeach;?>
 				</div>
 				<form method="post">
-						<input class="text" class="input" id="new_cmt_<?=$id_pic?>" name ="new_cmt_<?=$id_pic?>" onkeypress="{if (event.keyCode === 13) {event.preventDefault(); addCmt(<?=$id_pic?>, this, '<?=$_SESSION['loggedInUser']?>')}}"
+						<input class="text" class="input" style="width:98%;" id="new_cmt_<?=$id_pic?>" name ="new_cmt_<?=$id_pic?>" onkeypress="{if (event.keyCode === 13) {event.preventDefault(); addCmt(<?=$id_pic?>, this, '<?=$_SESSION['loggedInUser']?>')}}"
 						placeholder="Write a comment here...">
 				</form>
 			</div>
-	<?endforeach; ?>
-	<div class="page">
-		<? if ($page != 1):?>
-			<a href="myGallery.php?page=<?=($page - 1)?>">☜</a>
+		<?endforeach; ?>
+		<div class="page">
+			<? if ($page != 1):?>
+				<a href="myGallery.php?page=<?=($page - 1)?>">☜</a>
+			<?endif;?>
+				<span><b><?=$page?> </b> </span>
+			<? if ($page < $nbOfPage):?>
+				<a href="myGallery.php?page=<?=($page + 1)?>">☞</a>
+			<?endif;?>
+		</div>
+		</div>
 		<?endif;?>
-			<span><b><?=$page?> </b> </span>
-		<? if ($page < $nbOfPage):?>
-			<a href="myGallery.php?page=<?=($page + 1)?>">☞</a>
-		<?endif;?>
-	</div>
-	<?endif;?>
+		</div>
+		<div id="footer">
+			<hr>
+			<a href='https://github.com/prakriti-yan' class="left bottom"  target="_blank"><strong>Yan Yan 2020</strong></a>
+		</div>
 	</div>
 	<script type="application/javascript" src="../static/js/gallery.js"></script>
 </body>

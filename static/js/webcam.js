@@ -1,6 +1,8 @@
 
 (function() {
-	var width = 320;
+	// var width = 400;
+	var containerWidth = document.getElementById("content").clientWidth;
+	var width = 0.60*containerWidth;
 	var height = 0;
 	var streaming = false;
 	var imgselected = 0;
@@ -34,6 +36,7 @@
 		if (isNaN(height)){
 			height = width / (4/3);
 		}
+		
 		video.setAttribute('width', width);
 			video.setAttribute('height', height);
 			canvas.setAttribute('width', width);
@@ -98,6 +101,7 @@
 					var wid=this.width;
 					var hegt=this.height;
 					if (wid > 1000 || hegt >1000){
+						// if (wid > "60%" || hegt >"60%"){
 						wid = wid / 9;
 						hegt = hegt / 9;
 					}
@@ -159,7 +163,7 @@
     	div.setAttribute("class", "displaypic");
 		var img = document.createElement("IMG");
 		img.setAttribute("src", imgdata);
-		img.setAttribute("class", "minipic left");
+		img.setAttribute("class", "minipic");
 		var del = document.createElement("IMG");
 		del.setAttribute("src", "../static/img/del.png");
 		del.setAttribute("class", "delpic");

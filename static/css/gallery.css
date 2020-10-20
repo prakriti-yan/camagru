@@ -1,3 +1,42 @@
+#container{
+	margin: 0 auto;
+	text-align: left;
+	width: 95%;
+	height: 95%;
+	border-radius: 10px;
+	background-color:  rgb(233, 233, 247);
+	
+}
+
+#contentheader{
+	font-size: 20px;
+	background-color:#B0A6B9;
+	color: white;
+	text-align: center;
+	margin-top: 3%;
+}
+
+#main{
+	/* float: left; */
+	width: 100%;
+	text-align: center;
+}
+
+.likeComment{
+	text-align: left;
+}
+
+.comment{
+	text-align: left;
+}
+
+form{
+	text-align: left;
+}
+.page{
+	background-color:  rgb(233, 233, 247);
+}
+
 .gallerysection{
 	text-align: center;
 }
@@ -7,27 +46,30 @@
 	margin-top: 10px;
 }
 
-#container{
-	margin: 0 auto;
-	text-align: center;
-	width: 1500px;
-	height: 1000px;
-	border-radius: 10px;
-	background-color: lavender;
-	
-}
-
 .delpic{
 	position: absolute;
   	cursor: pointer;
-  	top: 5px;
-  	right: 5px;
+  	top: 10px;
+  	right: 10px;
 }
 
 .displaypic{
 	float: left;
 	  position: relative;
+	  width: 50%;
+	  text-align: center;
 	  top: 0;
 	  left: 0;
-	  margin-left: 10px;
+	  margin-left: 25%;
+	  margin-right: 25%;
+	  margin-top: 3%;
+	  border: 10px solid #8b759e;
+  /* border-right: 1rem solid #B0A6B9; */
+  /* border-bottom: 1rem solid #B0A6B9; */
+  /* border-left: 1rem solid #a67c52; */
+}
+
+.img{
+	/* position: absolute; */
+	width: 100%;
 }

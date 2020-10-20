@@ -5,8 +5,7 @@ body{
 #container{
 	margin: 0 auto;
 	text-align: left;
-    width: 1500px;
-    height: 1000px;
+    width: 95%;
 	border-radius: 10px;
 	background-color: rgb(233, 233, 247);
 }
@@ -16,7 +15,6 @@ body{
 }
 
 #section{
-    /* float: left; */
     text-align: center;
 	width: 500px;
 }

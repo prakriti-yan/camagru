@@ -5,16 +5,16 @@ body{
 #container{
 	margin: 0 auto;
 	text-align: left;
-	width: 1500px;
+	width: 95%;
 	border-radius: 10px;
-	background-color: lavender;
+	background-color:  rgb(233, 233, 247);
 	
 }
 
 
 #content{
 	float: left;
-	width: 1000px;
+	width: 60%;
 	/* background-color: #B0A6B9; */
 }
 
@@ -23,16 +23,16 @@ body{
 	background-color:#B0A6B9;
 	color: white;
 	text-align: center;
+	margin-top: 15px;
 }
 
 #content p{
 	font-size: 18px;
-	/* color: white; */
 }
 #content span {
 	font-size: 18px;
-	/* color: white; */
 }
+
 .left{
 	margin-left: 20px;
 }
@@ -43,7 +43,7 @@ body{
 
 #sidebar{
 	float: right;
-	width: 500px;
+	width: 40%;
 }
 
 #sideheader{
@@ -51,34 +51,33 @@ body{
 	background-color: #B0A6B9;
 	text-align: center;
 	color: white;
+	margin-top: 15px;
 }
 
 .minipic{
- width: 200px;
+	width:100%;
 }
 
 .displaypic{
 	float: left;
-	  position: relative;
-	  top: 0;
-	  left: 0;
-	  margin-left: 10px;
-	  /* width: 500px; */
-	/* text-align: center; */
+	position: relative;
+	width: 45%;
+	margin-left: 2.5%;
+	margin-right: 2.5%;
+	margin-bottom: 5%;	
+	margin-top: 20px;
 }
-
-
 
 .delpic{
 	position: absolute;
   	cursor: pointer;
-  	top: 5px;
-  	right: 5px;
+  	top:10px;
+  	right: 10px;
 }
 
 #footer{
 	clear: both;
-	width: 1500px;
+	width: 100%;
 	color: black;
 	font-style: italic;
 	font-size: 18px;

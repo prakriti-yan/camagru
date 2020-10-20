@@ -34,7 +34,6 @@ function addLike(id_pic){
 }
 
 function addCmt(id_pic, comment, login){
-	// cmt = htmlEntities(comment.value);
 	cmt = comment.value;
 	if (cmt.trim() === "")
 		return;

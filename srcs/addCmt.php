@@ -10,6 +10,5 @@ require "../class/comment.class.php";
 
 $db = new Comments($id_pic,  $login, $comment);
 $db->addCmt();
-// $db->sendEmailToLogin();
 
 ?>

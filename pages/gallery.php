@@ -14,7 +14,8 @@
 <body>
 	<div id = "container">
 	<?php include "header.php"?>
-	<h2>Gallery</h2>
+	<!-- <h2>Gallery</h2> -->
+	<div id="contentheader">✨ Gallery 💎</div><br/>
 	<?php
 		require '../class/image.class.php';
 		$db = new Images("", "", "");
