@@ -1,9 +1,9 @@
 function deleteImg(id_pic){
 	document.getElementById("del_"+id_pic).parentNode.remove();
-	console.log(id_pic);
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "../srcs/delImg.php?id_pic="+id_pic, true);
 	xhr.send();
+	location.reload();
 }
 
 function addLike(id_pic){
@@ -45,9 +45,13 @@ function addCmt(id_pic, comment, login){
 		if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
 			var div = document.createElement("DIV");
 			div.setAttribute("class", "comment");
-			div.innerHTML = "<b>"+login + "</b> "+cmt;
+			div.innerHTML = "<b>"+htmlEntities(login) + "</b> "+htmlEntities(cmt);
 			document.getElementById("comments_"+id_pic).appendChild(div);
 			comment.value="";
 		}
 	}
+}
+
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }

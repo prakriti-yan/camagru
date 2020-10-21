@@ -155,7 +155,6 @@
 			xhr.onreadystatechange = function(){
 				if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
 					var res = JSON.parse(xhr.responseText);
-					// console.log(res);
 					addMini(res['id_pic'], imgdata);
 				}
 			}
@@ -180,9 +179,7 @@
 		var side = document.getElementById("sidecontent");
 		side.insertBefore(div, side.childNodes[0]);
 		div.insertBefore(del, div.childNodes[0]);
-		div.insertBefore(img, div.childNodes[0]);
-		
-		
+		div.insertBefore(img, div.childNodes[0]);	
 	}	
 
 	img1.addEventListener("click", function(ev){

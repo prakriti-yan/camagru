@@ -83,9 +83,7 @@ form{
 }
 
 .img{
-	/* position: absolute; */
 	width: 100%;
-	
 }
 
 #footer{
@@ -94,6 +92,15 @@ form{
 	color: black;
 	font-style: italic;
 	font-size: 18px;
+	text-align: left;
+}
+
+.left{
+	margin-left: 20px;
+}
+
+.bottom{
+	margin-bottom: 20px;
 }
 
 hr{

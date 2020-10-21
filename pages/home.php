@@ -1,6 +1,8 @@
 <?php
 	session_start();
 	require '../class/user.class.php';
+	if ($_SESSION['loggedInUser'] != NULL)
+		header("Location: main.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,14 +38,16 @@
 	</div>
 	<?php
 	if (!empty(htmlentities($_POST['login'])) && !empty(htmlentities($_POST['pwd'])) && $_POST['submit'] == "OK"){
-		$login = trim(htmlentities($_POST['login']));
+		$login = trim($_POST['login']);
 		$pwd = htmlentities($_POST['pwd']);
-		$db = new Users($login, $pwd, "", "", "");
+		$db = new Users($login, $pwd, "", "", "", "");
 		$db->verifyUser();
 		if ($db->msg != null)
 			echo '<div style="color:red;">' . $db->msg . '</div>';
 		else{
+			$user = $db->getUser();
 			$_SESSION['loggedInUser'] = $login;
+			$_SESSION['email']=$user['email'];
 			echo '<script> location.replace("../index.php"); </script>';
 		}
 	}
@@ -83,9 +87,9 @@
 	<?php
 	if (!empty(htmlentities($_POST['new_login'])) && !empty($_POST['new_pwd']) && !empty($_POST['new_pwdVerif'])
     && !empty(htmlentities($_POST['new_email'])) && $_POST['new_submit'] == "OK"){
-		$new_login = trim(htmlentities($_POST['new_login']));
+		$new_login = trim($_POST['new_login']);
 		$new_email = trim(htmlentities($_POST['new_email']));
-		$db = new Users($new_login, $_POST['new_pwd'], $_POST['new_pwdVerif'], $new_email, "");
+		$db = new Users($new_login, $_POST['new_pwd'], $_POST['new_pwdVerif'],"", $new_email, "");
 		$db->sendConfirmEmail();
 		if ($db->msg)
 			echo '<div style="color:red;">' . $db->msg . '</div>';
@@ -93,9 +97,8 @@
 		echo '<div style="color:red;">Fill in all the fields!</div>';
 	else if ($_GET['tken'] != ""){
 		$token = $_GET['tken'];
-		$db = new Users("", "", "", "", $token);
+		$db = new Users("", "", "","", "", $token);
 		$db->connectUser();
-		print_r($db->msg);
 		if ($db->msg)
         	echo '<div style="color:red;">' . $db->message . '</div>';
 	}

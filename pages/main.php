@@ -1,6 +1,5 @@
 <?php
 
-$body_onload = "initialiseWebcam();";
 session_start();
 if (!isset($_SESSION['loggedInUser'])){
 	header("Location: home.php");
@@ -22,7 +21,6 @@ if (!isset($_SESSION['loggedInUser'])){
 	<div id = "container">
 	<?php include 'header.php'; ?>
 		<div id="flex">
-		<!-- <div id="main"> -->
 		<div id="content">
 			<div id="contentheader"> ✨ Create a post in Camagru 💎 </div>
 			<p class="left"> 1️⃣ First, pick a sticker from below 😌 </p>

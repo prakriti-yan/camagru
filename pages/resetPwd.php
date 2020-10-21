@@ -22,10 +22,9 @@
         require '../class/user.class.php';
         if (!empty(htmlentities($_POST['login'])) && $_POST['submit'] == "OK"){
             $login = trim(htmlentities($_POST['login']));
-            $db = new Users($login, "", "", "", "");
+            $db = new Users($login, "", "","", "", "");
             $db->sentResetEmail();
             if ($db->msg){
-                print_r($db->msg);
             }
         }
     ?>

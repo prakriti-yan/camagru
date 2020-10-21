@@ -1,6 +1,6 @@
 <?php
  session_start();
-if ($_SESSION['loggedInUser'] === null)
+if (!isset($_SESSION['loggedInUser']))
 	header("Location: ../index.php");
 ?>
 
@@ -26,12 +26,11 @@ if ($_SESSION['loggedInUser'] === null)
 		$nb = 3;
 		$page = isset($_GET['page']) ? $_GET['page'] : 1;
 		$nbOfImg = $db->countNBByLogin();
-		$nbOfPage = ceil($nbOfImg / $nb); // ceil(), round the fraction up!
-		print_r($nbOfImg, $nbOfPage);
+		$nbOfPage = ceil($nbOfImg / $nb);
 		if ($nbOfImg == 0):?>
-			<p>You do not have images saved in the gallery, please create in Web-camera page!</p>
+			<p>You do not have posts saved in the gallery, please create one here <a href="main.php">Web-camera page</a> 🥰</p>
 		<?elseif($page > $nbOfPage || !preg_match('/^[0-9]*$/', $page)):
-			echo '<script>header("Location: mygallery.php?page=1")</script>';
+			echo '<script>location.replace("mygallery.php?page=1")</script>';
 		else:
 			$imgs = $db->getImgByNBByLogin(($page - 1) * $nb, $nb);
 
@@ -48,7 +47,7 @@ if ($_SESSION['loggedInUser'] === null)
 				?>
 			
 			<div class="displaypic">
-				<div class=name> <b><?=$img['login']?></b> </div>
+				<div class=name> <b><?=htmlentities($img['login'])?></b> </div>
 				<img class="img" src="data:image/jpeg;base64,<?=base64_encode($img['image'])?>" >
 				<img class = "delpic" id="del_<?=$img['id_pic']?>" onclick="deleteImg(<?=$img['id_pic']?>)" src="../static/img/del.png">
 				<div class="likeComment">
@@ -62,7 +61,7 @@ if ($_SESSION['loggedInUser'] === null)
 				</div>
 				<div id="comments_<?=$id_pic?>">
 					<? foreach ($comments as $cmt): ?>
-						<div class="comment"><b><?=$cmt['login']?> </b><?=$cmt['comment']?></div>
+						<div class="comment"><b><?=htmlentities($cmt['login'])?> </b><?=htmlentities($cmt['comment'])?></div>
 					<?endforeach;?>
 				</div>
 				<form method="post">

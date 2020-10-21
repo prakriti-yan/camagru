@@ -8,6 +8,5 @@ require '../class/like.class.php';
 
 $db = new Likes($id_pic, $login);
 $db->deleteLike();
-print_r($db);
 
 ?>

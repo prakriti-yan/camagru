@@ -1,5 +1,7 @@
 <?php
  session_start();
+ if (!isset($_SESSION['loggedInUser']))
+	header("Location: ../index.php");
 ?>
 
 <!DOCTYPE html>
@@ -26,9 +28,9 @@
 		$nbOfImg = $db->countNB();
 		$nbOfPage = ceil($nbOfImg / $nb);
 		if ($nbOfImg == 0):?>
-			<p>There are no images in gallery, please create in Web-camera page!</p>
+			<p>There are no posts in gallery, please create one here <a href="main.php">Web-camera page</a> 🥰</p>
 		<?elseif($page > $nbOfPage || !preg_match('/^[0-9]*$/', $page)):
-			echo '<script>header("Location: gallery.php?page=1")</script>';
+			echo '<script>location.replace("gallery.php?page=1")</script>';
 		else:
 			$imgs = $db->getImgByNB(($page - 1) * $nb, $nb);
 			require '../class/like.class.php';
@@ -45,7 +47,7 @@
 				?>
 				
 			<div class = "displaypic">
-				<div class=name> <b><?=$img['login']?></b> </div>
+				<div class=name> <b><?=htmlentities($img['login'])?></b> </div>
 				<img class="img" src="data:image/jpeg;base64,<?=base64_encode($img['image'])?>" >
 			<div class="likeComment">
 				<?if ($recordOfLike == null):?>
@@ -58,7 +60,7 @@
 			</div>
 			<div id="comments_<?=$id_pic?>">
 				<?foreach ($comments as $cmt):?>
-					<div class="comment"><b><?=$cmt['login']?></b> <?=$cmt['comment']?></div>
+					<div class="comment"><b><?=htmlentities($cmt['login'])?></b> <?=htmlentities($cmt['comment'])?></div>
 				<?endforeach;?>
 			</div>
 			<form method="post">

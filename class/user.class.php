@@ -8,11 +8,12 @@ class Users {
 	private $login;
 	private $pwd;
 	private $pwdVerif;
+	private $old_pwd;
 	private $email;
 	private $token;
 	public $msg;
 
-	public function __construct($login, $pwd, $pwdVerif, $email, $token){
+	public function __construct($login, $pwd, $pwdVerif, $old_pwd, $email, $token){
 		try {
 			require '../config/database.php';
 			$this->db = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
@@ -20,6 +21,7 @@ class Users {
 			$this->login=$login;
 			$this->pwd=$pwd;
 			$this->pwdVerif = $pwdVerif;
+			$this->old_pwd = $old_pwd;
 			$this->email = $email;
 			$this->token = $token;
 		}catch(PDOException $e){
@@ -27,10 +29,21 @@ class Users {
 		}
 	}
 
-	private function getUser(){
+	public function getUser(){
 		try{
 			$request = $this->db->prepare("SELECT * FROM `users` WHERE `login` = ?");
 			$response = $request->execute(array($this->login));
+			$user = $request->fetch(PDO::FETCH_ASSOC);
+			return $user;
+		}catch(PDOException $e){
+			die('Error! Cannot find the user! '.$e->getMessage());
+		}
+	}
+
+	private function getEmail(){
+		try{
+			$request = $this->db->prepare("SELECT * FROM `users` WHERE `email` = ?");
+			$response = $request->execute(array($this->email));
 			$user = $request->fetch(PDO::FETCH_ASSOC);
 			return $user;
 		}catch(PDOException $e){
@@ -49,8 +62,11 @@ class Users {
 		if (strlen($this->login) > 32)
 			return $this->msg = 'Your login name cannot exceed 32 characters!';
 		$existingUser = $this->getUser();
+		$existingEmail = $this->getEmail();
 		if ($existingUser)
 			return $this->msg = 'This login name already exist, please give a new one!';
+		if ($existingEmail)
+			return $this->msg = 'This email has already been used, please use another one!';
 		$this->checkPwd();
 		if ($this->msg != null)
 			return;
@@ -65,7 +81,7 @@ class Users {
 				return $this->msg = "The login entered does not belong to any registered account!";
 			if ($user['confirm'] == 0)
 				return $this->msg = "This account has not yet been validated by email!";
-			if ($user['password'  != hash('whirlpool', $this->pwd)])
+			if ($user['password']  != hash('whirlpool', $this->pwd))
 				return $this->msg = "The password is incorrect, please try again!";
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());
@@ -101,7 +117,7 @@ class Users {
 			if (!$user)
 				return $this->msg = "The token has already expired!";
 			$request = $this->db->prepare("UPDATE `users` SET `confirm`=?, `token`=?, `token_expires`=? WHERE `token`=?");
-			$request->execute(array(1, NULL, NULL, $this->token )); // HERE NEED SOME INVESTIGATION!
+			$request->execute(array(1, NULL, NULL, $this->token )); 
 			$this->msg = "Your accound has been validated now, " . $user['login']  . " . Please log in!";
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());
@@ -143,6 +159,25 @@ class Users {
 			$request = $this->db->prepare("UPDATE `users` SET `password` = ? WHERE `token` = ?");
 			$request->execute(array(hash('whirlpool', $this->pwd), $this->token));
 			$this->msg = "Your password has been changed!";
+		}catch(PDOException $e){
+			die('Error: '.$e->getMessage());
+		}
+	}
+
+	public function updateProfile(){
+		try{
+			$old_login= $_SESSION['loggedInUser'];
+			$request = $this->db->prepare("SELECT * FROM `users` WHERE `login` = ?");
+			$response = $request->execute(array($old_login));
+			$user = $request->fetch(PDO::FETCH_ASSOC);
+			if ($user['password']  != hash('whirlpool', $this->old_pwd))
+				return $this->msg = "Old password is incorrect, please try again!";
+			$request = $this->db->prepare("UPDATE `users` SET `login` = ?,  `password` = ?, `email` = ? WHERE `id_user` = ?");
+			$response = $request->execute(array($this->login, hash('whirlpool', $this->pwd), $this->email, $user['id_user']));
+			$_SESSION['loggedInUser'] = $this->login;
+			$_SESSION['email'] = $this->email;
+			echo '<div style="color:red;">Your profile has been successfully modified!</div> <script> location.replace("profile.php"); </script>';
+			// $this->msg = "Your profile has been successfully modified!";
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());
 		}

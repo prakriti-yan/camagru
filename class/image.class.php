@@ -93,7 +93,6 @@ class Images {
 
 	public function deleteImg(){
 		try{
-			print_r("we are here");
 			$request = $this->db->prepare("DELETE FROM `images` WHERE `id_pic` = ? AND `login` = ?");
 			$request->execute(array($this->id_pic, $this->login));
 		}catch(PDOException $e){
