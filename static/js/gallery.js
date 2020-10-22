@@ -3,7 +3,7 @@ function deleteImg(id_pic){
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "../srcs/delImg.php?id_pic="+id_pic, true);
 	xhr.send();
-	location.reload();
+	// location.reload();
 }
 
 function addLike(id_pic){
