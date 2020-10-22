@@ -1,7 +1,7 @@
 <?php
  session_start();
- if (!isset($_SESSION['loggedInUser']))
-	header("Location: ../index.php");
+//  if (!isset($_SESSION['loggedInUser']))
+// 	header("Location: ../index.php");
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +51,9 @@
 				<img class="img" src="data:image/jpeg;base64,<?=base64_encode($img['image'])?>" >
 			<div class="likeComment">
 				<?if ($recordOfLike == null):?>
-					<button class="like" onclick="addLike(<?=$id_pic?>)"><img id="like_<?=$id_pic?>" src="../static/img/heart.png"></button>
+					<button class="like" onclick="<? if ($_SESSION['loggedInUser'] != null): ?> 
+														addLike(<?=$id_pic?>)
+													<?endif;?> "><img id="like_<?=$id_pic?>" src="../static/img/heart.png"></button>
 				<?else:?>
 					<button class="like" onclick="addLike(<?=$id_pic?>)"><img id="like_<?=$id_pic?>" src="../static/img/heart_red.png"></button>
 				<?endif;?>
@@ -64,8 +66,11 @@
 				<?endforeach;?>
 			</div>
 			<form method="post">
-				<input class="text" class="input" style="width:98%;"id="new_cmt_<?=$id_pic?>" name ="new_cmt_<?=$id_pic?>" onkeypress="{if (event.keyCode === 13) {event.preventDefault(); addCmt(<?=$id_pic?>, this, '<?=$_SESSION['loggedInUser']?>')}}"
-					placeholder="Write a comment here...">
+				<input class="text" class="input" style="width:98%;"id="new_cmt_<?=$id_pic?>" name ="new_cmt_<?=$id_pic?>" 
+					onkeypress="{if (event.keyCode === 13 && <?$_SESSION['loggedInUser'] !== null?>) 
+					 {	event.preventDefault();
+						 addCmt(<?=$id_pic?>, this, '<?=$_SESSION['loggedInUser']?>');
+					}}" placeholder="Write a comment here..."/>
 			</form>
 			</div>
 			<?endforeach;?>

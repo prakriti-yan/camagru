@@ -9,6 +9,7 @@
 				<li><a href="profile.php" id="name"><?=$_SESSION['loggedInUser']?></a></li>
 				<li><a href="logout.php">Log out</a></li>
 			<? else: ?>
+				<li><a href="gallery.php?page=1">Gallery</a></li>
 				<li><a href="home.php">Connect</a></li>
 			<? endif; ?>
 		</ul>
