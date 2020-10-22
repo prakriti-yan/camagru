@@ -15,7 +15,7 @@ class Images {
 			$this->id_pic = $id_pic;
 			$this->img = $img;
 			$this->login = $login;
-
+			
 		}catch(PDOException $e){
 				die('Error: '.$e->getMessage());
 		}
@@ -95,6 +95,15 @@ class Images {
 		try{
 			$request = $this->db->prepare("DELETE FROM `images` WHERE `id_pic` = ? AND `login` = ?");
 			$request->execute(array($this->id_pic, $this->login));
+		}catch(PDOException $e){
+			die('Error: '.$e->getMessage());
+		}
+	}
+
+	public function changeLogin($new_login){
+		try{
+			$request = $this->db->prepare("UPDATE `images` SET `login` = ? WHERE `login` = ?");
+			$request->execute(array($new_login, $this->login));
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());
 		}

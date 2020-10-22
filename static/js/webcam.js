@@ -3,7 +3,7 @@
 	var width = 400;
 	var height = 0;
 	var streaming = false;
-	var imgselected = 0;
+	var imgselected = [];
 	var video = document.getElementById("video");
 	var canvas = document.getElementById("canvas");
 	var photo = document.getElementById("photo");
@@ -62,14 +62,10 @@
 	});
 
 	uploadbutton.addEventListener("click", function(){
-		if (imgselected == 0){
-			alert("Choose a sticker first :)");
+		if (upload != 0){
+			takepicture(0);
 		}else{
-			if (upload != 0){
-				takepicture(0);
-			}else{
-				alert("Choose a picture to upload :)");
-			}
+			alert("Choose a picture to upload :)");
 		}
 	})
 	
@@ -82,7 +78,7 @@
 	}
 
 	function takepicture(nb){
-		if (imgselected != 0){
+		if (imgselected.length != 0){
 			var newcanvas = document.createElement("canvas");
 			newcanvas.width = width;
 			newcanvas.height = height;
@@ -105,7 +101,6 @@
 					var wid=this.width;
 					var hegt=this.height;
 					if (wid > 1000 || hegt >1000){
-						// if (wid > "60%" || hegt >"60%"){
 						wid = wid / 9;
 						hegt = hegt / 9;
 					}
@@ -119,8 +114,47 @@
 				}
 			}
 		}else{
-			alert("Choose a sticker first :)");
+			takepictureNoSticker(nb);
 		}
+	}
+	
+	function takepictureNoSticker(nb){
+		var newcanvas = document.createElement("canvas");
+			newcanvas.width = width;
+			newcanvas.height = height;
+			canvas.width = width;
+			canvas.height = height;
+			if (nb == 1){
+				if (width && height) {
+					photo.width = width;
+					photo.height = height;
+					newcanvas.getContext("2d").drawImage(video, 0, 0, width, height);
+					var pic = newcanvas.toDataURL("image/png");
+					photo.setAttribute("src", pic);
+					imgdata = pic;
+				}else{
+					clearpicture();
+				}
+			}else{
+				var image = new Image();
+				image.src = upload;
+				image.onload = function(){
+					var wid=this.width;
+					var hegt=this.height;
+					if (wid > 1000 || hegt >1000){
+						wid = wid / 9;
+						hegt = hegt / 9;
+					}
+					newcanvas.width = wid;
+					newcanvas.height = hegt;
+					photo.width = wid;
+					photo.height = hegt;
+					newcanvas.getContext("2d").drawImage(image, 0, 0, wid, hegt);
+					var pic = newcanvas.toDataURL("image/png");
+					photo.setAttribute("src", pic);
+					imgdata = pic;
+				}
+			}
 	}
 
 	function mergeImg(pic){
@@ -146,23 +180,18 @@
 	}
 
 	savebutton.addEventListener("click", function(ev){
-		if (imgdata != 0){
-			var picdata = imgdata.replace("data:image/png;base64,", "");
-			var xhr = new XMLHttpRequest();
-			xhr.open("POST", "../srcs/saveImg.php", true);
-			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr.send("pic="+encodeURIComponent(picdata));
-			xhr.onreadystatechange = function(){
-				if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
-					var res = JSON.parse(xhr.responseText);
-					addMini(res['id_pic'], imgdata);
-				}
+		var picdata = imgdata.replace("data:image/png;base64,", "");
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "../srcs/saveImg.php", true);
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.send("pic="+encodeURIComponent(picdata));
+		xhr.onreadystatechange = function(){
+			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+				var res = JSON.parse(xhr.responseText);
+				addMini(res['id_pic'], imgdata);
 			}
-
-			ev.preventDefault();
-		}else{
-			alert("Create a post to save :)");
 		}
+		ev.preventDefault();
 	}, false);
 
 	function addMini(id_pic, imgdata){
@@ -183,39 +212,67 @@
 	}	
 
 	img1.addEventListener("click", function(ev){
-		imgselected = 1;
-		img1.setAttribute("style", "background-color:#F7C1C1");
-		img2.setAttribute("style", "background-color:#ffffff");
-		img3.setAttribute("style", "background-color:#ffffff");
-		img4.setAttribute("style", "background-color:#ffffff");
-		ev.preventDefault;
+		if (imgselected.includes(1)){
+			var index = imgselected.indexOf(1);
+			if (index > -1) {
+				imgselected.splice(index, 1);
+			}
+			console.log(imgselected);
+			img1.setAttribute("style", "background-color:#ffffff");
+			ev.preventDefault;
+		}else{
+			imgselected.push(1);
+			img1.setAttribute("style", "background-color:#F7C1C1");
+			ev.preventDefault;
+		}
 	}, false);
 
 	img2.addEventListener("click", function(ev){
-		imgselected = 2;
-		img1.setAttribute("style", "background-color:#ffffff");
-		img2.setAttribute("style", "background-color:#F7C1C1");
-		img3.setAttribute("style", "background-color:#ffffff");
-		img4.setAttribute("style", "background-color:#ffffff");
-		ev.preventDefault;
+		if (imgselected.includes(2)){
+			var index = imgselected.indexOf(2);
+			if (index > -1) {
+				imgselected.splice(index, 1);
+			}
+			console.log(imgselected);
+			img2.setAttribute("style", "background-color:#ffffff");
+			ev.preventDefault;
+		}else{
+			imgselected.push(2);
+			img2.setAttribute("style", "background-color:#F7C1C1");
+			ev.preventDefault;
+		}
 	}, false);
 
 	img3.addEventListener("click", function(ev){
-		imgselected = 3;
-		img1.setAttribute("style", "background-color:#ffffff");
-		img2.setAttribute("style", "background-color:#ffffff");
-		img3.setAttribute("style", "background-color:#F7C1C1");
-		img4.setAttribute("style", "background-color:#ffffff");
-		ev.preventDefault;
+		if (imgselected.includes(3)){
+			var index = imgselected.indexOf(3);
+			if (index > -1) {
+				imgselected.splice(index, 1);
+			}
+			console.log(imgselected);
+			img3.setAttribute("style", "background-color:#ffffff");
+			ev.preventDefault;
+		}else{
+			imgselected.push(3);
+			img3.setAttribute("style", "background-color:#F7C1C1");
+			ev.preventDefault;
+		}
 	}, false);
 
 	img4.addEventListener("click", function(ev){
-		imgselected = 4;
-		img1.setAttribute("style", "background-color:#ffffff");
-		img2.setAttribute("style", "background-color:#ffffff");
-		img3.setAttribute("style", "background-color:#ffffff");
-		img4.setAttribute("style", "background-color:#F7C1C1");
-		ev.preventDefault;
+		if (imgselected.includes(4)){
+			var index = imgselected.indexOf(4);
+			if (index > -1) {
+				imgselected.splice(index, 1);
+			}
+			console.log(imgselected);
+			img4.setAttribute("style", "background-color:#ffffff");
+			ev.preventDefault;
+		}else{
+			imgselected.push(4);
+			img4.setAttribute("style", "background-color:#F7C1C1");
+			ev.preventDefault;
+		}
 	}, false);
 
 	

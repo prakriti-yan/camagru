@@ -1,7 +1,5 @@
 <?php
 
-
-
 class Users {
 
 	private $db;
@@ -172,16 +170,23 @@ class Users {
 			$user = $request->fetch(PDO::FETCH_ASSOC);
 			if ($user['password']  != hash('whirlpool', $this->old_pwd))
 				return $this->msg = "Old password is incorrect, please try again!";
-			$request = $this->db->prepare("UPDATE `users` SET `login` = ?,  `password` = ?, `email` = ? WHERE `id_user` = ?");
-			$response = $request->execute(array($this->login, hash('whirlpool', $this->pwd), $this->email, $user['id_user']));
-			$_SESSION['loggedInUser'] = $this->login;
-			$_SESSION['email'] = $this->email;
-			echo '<div style="color:red;">Your profile has been successfully modified!</div> <script> location.replace("profile.php"); </script>';
-			// $this->msg = "Your profile has been successfully modified!";
+			$user = $this->getUser();
+			if ($user && $user['login'] != $old_login)
+				return $this->msg = "This username has already been taken, please choose another one!";
+			$user = $this->getEmail();
+			if ($user && $user['login'] != $old_login)
+				return $this->msg = "This email has already been taken, please choose another one!";
+			$request = $this->db->prepare(" UPDATE `users` SET `login` = ?,  `password` = ?, `email` = ? WHERE `id_user` = ?");
+			$response = $request->execute(array($this->login, hash('whirlpool', $this->pwd), $this->email, $user['id_user']));	
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());
 		}
 	}
+	public function resetSession(){
+		$_SESSION['loggedInUser'] = $this->login;
+		$_SESSION['email'] = $this->email;
+	}
+
 }
 
 ?>

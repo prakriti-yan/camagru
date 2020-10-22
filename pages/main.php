@@ -23,7 +23,7 @@ if (!isset($_SESSION['loggedInUser'])){
 		<div id="flex">
 		<div id="content">
 			<div id="contentheader"> ✨ Create a post in Camagru 💎 </div>
-			<p class="left"> 1️⃣ First, pick a sticker from below 😌 </p>
+			<p class="left"> 1️⃣ First, feel free to pick one or more stickers from below 😌 </p>
 			<button id="img1" class="left" style=background-color:#ffffff><img src="../static/img/img1.png" width=120></button>
 			<button id="img2" class="left" style=background-color:#ffffff><img src="../static/img/img2.png" width=120></button>
 			<button id="img3" class="left" style=background-color:#ffffff><img src="../static/img/img3.png" width=120></button>

@@ -70,6 +70,15 @@ class Comments {
 		}
 	}
 
+	public function changeLogin($new_login){
+		try{
+			$request = $this->db->prepare("UPDATE `comments` SET `login` = ? WHERE `login` = ?");
+			$request->execute(array($new_login, $this->login));
+		}catch(PDOException $e){
+			die('Error: '.$e->getMessage());
+		}
+	}
+
 }
 
 ?>

@@ -68,6 +68,15 @@ class Likes {
 			die('Error: '.$e->getMessage());
 		}
 	}
+
+	public function changeLogin($new_login){
+		try{
+			$request = $this->db->prepare("UPDATE `likes` SET `login` = ? WHERE `login` = ?");
+			$request->execute(array($new_login, $this->login));
+		}catch(PDOException $e){
+			die('Error: '.$e->getMessage());
+		}
+	}
 }
 
 ?>

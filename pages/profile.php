@@ -1,6 +1,10 @@
 <?php
 	session_start();
 	require '../class/user.class.php';
+	require '../class/image.class.php';
+	require '../class/like.class.php';
+	require '../class/comment.class.php';
+
 	if (!isset($_SESSION['loggedInUser']))
 		header("Location: home.php");
 ?>
@@ -18,16 +22,16 @@
 	<div id="container">
 	<?php require 'header.php'?>
 	<div class="section">
-		<h2>Edit profile:</h2>
+		<h2>Edit profile</h2>
 		<form method="POST" action="">
 			<table border="0" align="center" cellpadding="5">
 			<tr>
 				<td align="right">Login: </td>
-				<td><input type="TEXT" name="new_login" required value="<?=$_SESSION['loggedInUser']?>"/></td>
+				<td><input type="TEXT" name="new_login" id="login" required /></td>
 			</tr>
 			<tr>
 				<td align="right">Email: </td>
-				<td><input type="TEXT" name="new_email" required value="<?=$_SESSION['email']?>"/></td>
+				<td><input type="TEXT" name="new_email" id="email" required /></td>
 			</tr>
 			<tr>
 				<td align="right">New password: </td>
@@ -58,13 +62,29 @@
 		$new_login = trim($_POST['new_login']);
 		$new_email = trim(htmlentities($_POST['new_email']));
 		$db = new Users($new_login, $_POST['new_pwd'], $_POST['new_pwdVerif'],$_POST['old_pwd'], $new_email, "");
-		// print_r($db);
 		$db->updateProfile();
-		if ($db->msg)
+		if (($db->msg) !== null){
 			echo '<div style="color:red;">' . $db->msg . '</div>';
+			return;
+		}else{
+			$old_login= $_SESSION['loggedInUser'];
+			$imgs = new Images("", "", $old_login);
+			$imgs->changeLogin($new_login);
+			$likes = new Likes("", $old_login);
+			$likes->changeLogin($new_login);
+			$cmts = new Comments("",  $old_login, "");
+			$cmts->changeLogin($new_login);
+			$db->resetSession();
+			echo '<div style="color:red;">Your account has been successfully modified!</div>';
+		}
+		
 	}else if ($_POST['new_submit'] == "OK")
 		echo '<div style="color:red;">Fill in all the fields!</div>';
 	?>
-	
+	<script type="application/javascript">
+		document.getElementById("login").value='<?php echo $_SESSION['loggedInUser'] ; ?>'; 
+		document.getElementById("email").value='<?php echo $_SESSION['email'] ; ?>'; 
+		document.getElementById("name").innerHTML='<?php echo $_SESSION['loggedInUser'] ; ?>'; 
+	</script>
 </body>
 </html>
