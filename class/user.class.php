@@ -99,8 +99,6 @@ class Users {
 		$date_create = date("Y-m-d H:i:s");
 		$date_expire = date("Y-m-d H:i:s", strtotime($date_create . ' + 3 days'));
 		try{
-			// $request = $this->db->prepare("INSERT INTO `users` (`login`, `password`, `email`, `date_creation`, `token`, `token_expires`, `notification`) VALUES (?, ?, ?, ?, ?, ?, ?)");
-			// $request->execute(array($this->login, hash('whirlpool', $this->pwd), $this->email, $date_create, $token, $date_expire, $this->notification));
 			$request = $this->db->prepare("INSERT INTO `users` (`login`, `password`, `email`, `date_creation`, `token`, `token_expires`) VALUES (?, ?, ?, ?, ?, ?)");
 			$request->execute(array($this->login, hash('whirlpool', $this->pwd), $this->email, $date_create, $token, $date_expire));
 			$request = $this->db->prepare("DELETE FROM `users` WHERE `token_expires` < NOW() AND `confirm` = 0");
@@ -121,7 +119,7 @@ class Users {
 				return $this->msg = "The token has already expired!";
 			$request = $this->db->prepare("UPDATE `users` SET `confirm`=?, `token`=?, `token_expires`=? WHERE `token`=?");
 			$request->execute(array(1, NULL, NULL, $this->token )); 
-			$this->msg = "Your accound has been validated now, " . $user['login']  . " . Please log in!";
+			return $this->msg = "Your accound has been validated now, " . $user['login']  . " . Please log in!";
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());
 		}
@@ -161,7 +159,7 @@ class Users {
 				return ;
 			$request = $this->db->prepare("UPDATE `users` SET `password` = ? WHERE `token` = ?");
 			$request->execute(array(hash('whirlpool', $this->pwd), $this->token));
-			$this->msg = "Your password has been changed!";
+			$this->msg = "Your password has been changed! Please login again from connect page!";
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());
 		}
@@ -193,14 +191,9 @@ class Users {
 		}
 	}
 	public function resetSession(){
-		$_SESSION['loggedInUser'] = $this->login;
-		$_SESSION['email'] = $this->email;
+		session_destroy();
+		echo '<script>setTimeout(function(){location.replace("home.php")}, 2000)</script>';
 	}
-
-	// public function resetnotification($value){
-	// 	$this->notification = $value;
-	// }
-
 }
 
 ?>

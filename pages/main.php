@@ -30,14 +30,14 @@ if (!isset($_SESSION['loggedInUser'])){
 			<button id="img4" class="left" style=background-color:#ffffff><img src="../static/img/img4.png" width=120></button><br /><br />
 			<span class="left"> 2️⃣ Then, take a picture using the camera 📸 </span>
 			<button id="startbutton" class="left">Capture</button><br /><br />
-			<video id="video" class="left">Your brower does not support Video element.</video><br />	
+			<video id="video" class="left" >Your brower does not support Video element.</video><br />	
 			<p class="left"> 3️⃣ Or, upload a picture from your computer 💻</p>
 			<input type="file" accept="image/*" name="uploadimg" id="uploadimg" class="left">
 			<button id="uploadbutton" >upload</button><br /><br/>
 			<span class="left"> 4️⃣ Finally, save your work below in the gallery 😌 </span>
 			<button id="savebutton">Save</button><br /><br />
 			<canvas id="canvas" style="display: none"></canvas> 
-			<img id="photo" class="left">
+			<img id="photo" class="left" src="../static/img/clear.png">
 		</div>
 		<div id = "sidebar">
 			<div id="sideheader">✨ Your creation 💎</div>

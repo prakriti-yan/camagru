@@ -70,8 +70,6 @@
 			$db = new Users($new_login, $_POST['new_pwd'], $_POST['new_pwdVerif'],$_POST['old_pwd'], $new_email, "", "no");
 		else
 			$db = new Users($new_login, $_POST['new_pwd'], $_POST['new_pwdVerif'],$_POST['old_pwd'], $new_email, "", "yes");
-		// print_r($_POST);
-		// print_r($db);
 		$db->updateProfile();
 		if (($db->msg) !== null){
 			echo '<div style="color:red;">' . $db->msg . '</div>';
@@ -85,7 +83,7 @@
 			$cmts = new Comments("",  $old_login, "");
 			$cmts->changeLogin($new_login);
 			$db->resetSession();
-			echo '<div style="color:red;">Your account has been successfully modified!</div>';
+			echo '<div style="color:red;">Your account has been successfully modified, please login again!</div>';
 		}
 		
 	}else if ($_POST['new_submit'] == "OK")

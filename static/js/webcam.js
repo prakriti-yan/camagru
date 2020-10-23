@@ -1,6 +1,6 @@
 
 (function() {
-	var width = 400;
+	var width = document.getElementById("video").clientWidth;
 	var height = 0;
 	var streaming = false;
 	var imgselected = [];
@@ -53,7 +53,6 @@
 		}
 	}, false);
 	
-	clearpicture();
 
 	file.addEventListener("change", function(){
 		var file = this.files[0];
@@ -74,14 +73,6 @@
 		}
 	})
 	
-	function clearpicture(){
-		var context = canvas.getContext('2d');
-		context.font = "5px Arial";
-		context.fillText("Your artwork is shown here 💚",canvas.width, canvas.height);
-		var data = canvas.toDataURL("image/png");
-		photo.setAttribute('src', data);
-	}
-
 	function takepicture(nb){
 		if (imgselected.length != 0){
 			var newcanvas = document.createElement("canvas");
@@ -130,17 +121,6 @@
 			canvas.width = width;
 			canvas.height = height;
 			if (nb == 0){
-			// 	if (width && height) {
-			// 		photo.width = width;
-			// 		photo.height = height;
-			// 		newcanvas.getContext("2d").drawImage(video, 0, 0, width, height);
-			// 		var pic = newcanvas.toDataURL("image/png");
-			// 		photo.setAttribute("src", pic);
-			// 		imgdata = pic;
-			// 	}else{
-			// 		clearpicture();
-			// 	}
-			// }else{
 				var image = new Image();
 				image.src = upload;
 				image.onload = function(){
@@ -186,19 +166,21 @@
 
 	savebutton.addEventListener("click", function(ev){
 		if (imgdata != 0){
-		var picdata = imgdata.replace("data:image/png;base64,", "");
-		var xhr = new XMLHttpRequest();
-		xhr.open("POST", "../srcs/saveImg.php", true);
-		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhr.send("pic="+encodeURIComponent(picdata));
-		xhr.onreadystatechange = function(){
-			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
-				var res = JSON.parse(xhr.responseText);
-				addMini(res['id_pic'], imgdata);
+			var picdata = imgdata.replace("data:image/png;base64,", "");
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", "../srcs/saveImg.php", true);
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhr.send("pic="+encodeURIComponent(picdata));
+			xhr.onreadystatechange = function(){
+				if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+					var res = JSON.parse(xhr.responseText);
+					addMini(res['id_pic'], imgdata);
+					photo.setAttribute('src', "../static/img/clear.png");
+					imgdata = 0;
+				}
 			}
-		}
-		ev.preventDefault();}
-		else{
+			ev.preventDefault();
+		}else{
 			alert("Please take a picture or upload a picture first :)");
 		}
 	}, false);

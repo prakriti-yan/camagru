@@ -44,10 +44,12 @@ body{
 	margin-bottom: 20px;
 }
 
+#video {
+	width: 400px;
+}
+
 #sidebar{
-	/* float: left; */
 	width: 45%;
-	/* text-align: center; */
 	flex:0 auto;
 }
 
@@ -111,12 +113,11 @@ hr{
 }
 
 
-
-
 @media screen and (max-width: 660px){
 	#flex { flex-wrap: wrap; flex-direction: column; align-items: center;}
-	
+	#video {width: 70%;}
 	#content { width: 100%; }
 	#sidebar{ width: 100%; }
 	#sidecontent{flex-wrap: wrap; flex-direction: column;}
+	.displaypic{width: 65%;}
 }

@@ -90,8 +90,8 @@
 		$new_login = trim($_POST['new_login']);
 		$new_email = trim(htmlentities($_POST['new_email']));
 		$db = new Users($new_login, $_POST['new_pwd'], $_POST['new_pwdVerif'],"", $new_email, "", "");
-		// print_r($db);
 		$db->sendConfirmEmail();
+		
 		if ($db->msg)
 			echo '<div style="color:red;">' . $db->msg . '</div>';
 	}else if ($_POST['new_submit'] == "OK")
@@ -101,7 +101,7 @@
 		$db = new Users("", "", "","", "", $token, "");
 		$db->connectUser();
 		if ($db->msg)
-        	echo '<div style="color:red;">' . $db->message . '</div>';
+        	echo '<div style="color:red;">' . $db->msg . '</div>';
 	}
 	?>
 	

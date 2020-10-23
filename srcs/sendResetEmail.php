@@ -14,7 +14,7 @@ $msg .= "Hope to hear from you soon!";
 $msg .= "<p>Camagru</p>";
 $msg .= "</body></html>";
 if (mail($email, $subject, $msg, $headers))
-    return $this->msg = "Confirmation email has been sent to you.";
+    return $this->msg = "Password reset email has been sent to you.";
 else
-    return $this->msg = "Confirmation email cannot been sent!";
+    return $this->msg = "Password reset email cannot been sent!";
 ?>

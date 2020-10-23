@@ -25,6 +25,7 @@
             $db = new Users($login, "", "","", "", "","");
             $db->sentResetEmail();
             if ($db->msg){
+                echo '<div style="color:red;">' . $db->msg . '</div>';
             }
         }
     ?>
