@@ -24,7 +24,7 @@
 		$token = htmlentities($_GET['tken']);
 		$new_pwd = $_POST['new_pwd'];
 		$new_pwdVerif = $_POST['new_pwdVerif'];
-		$db = new Users("", $new_pwd, $new_pwdVerif, "","", $token);
+		$db = new Users("", $new_pwd, $new_pwdVerif, "","", $token,"");
 		$db->resetPwd();
 		if ($db->msg)
 			echo '<p style="color:red;">' . $db->msg . '</p>';

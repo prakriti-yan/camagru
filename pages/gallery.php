@@ -23,7 +23,7 @@
 	<?php
 		require '../class/image.class.php';
 		$db = new Images("", "", "");
-		$nb = 3;
+		$nb = 5;
 		$page = isset($_GET['page']) ? $_GET['page'] : 1;
 		$nbOfImg = $db->countNB();
 		$nbOfPage = ceil($nbOfImg / $nb);
@@ -66,11 +66,13 @@
 				<?endforeach;?>
 			</div>
 			<form method="post">
+			<?php if ($_SESSION['loggedInUser'] !== null): ?>
 				<input class="text" class="input" style="width:98%;"id="new_cmt_<?=$id_pic?>" name ="new_cmt_<?=$id_pic?>" 
-					onkeypress="{if (event.keyCode === 13 && <?$_SESSION['loggedInUser'] !== null?>) 
+					onkeypress="{if (event.keyCode === 13) 
 					 {	event.preventDefault();
 						 addCmt(<?=$id_pic?>, this, '<?=$_SESSION['loggedInUser']?>');
 					}}" placeholder="Write a comment here..."/>
+			<?endif;?>
 			</form>
 			</div>
 			<?endforeach;?>

@@ -23,7 +23,8 @@ try{
 		`date_creation` DATETIME NOT NULL,
 		`confirm` BOOLEAN DEFAULT 0 NOT NULL,
 		`token` VARCHAR(255),
-		`token_expires` DATETIME)';
+		`token_expires` DATETIME,
+		`notification` BOOLEAN NOT NULL DEFAULT true)';
 	$conn->exec($sql);
 
 	$sql = "CREATE TABLE IF NOT EXISTS `images` (

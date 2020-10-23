@@ -55,7 +55,6 @@ if (!isset($_SESSION['loggedInUser'])){
 			</div>
 		</div>
 		</div>
-		<!-- </div> -->
 		<div id="footer">
 			<hr>
 			<a href='https://github.com/prakriti-yan' class="left bottom"  target="_blank"><strong>Yan Yan 2020</strong></a>

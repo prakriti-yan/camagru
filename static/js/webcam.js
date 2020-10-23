@@ -44,8 +44,13 @@
 	}, false);
 	
 	startbutton.addEventListener('click', function(ev){
-		takepicture(1);
-		ev.preventDefault();
+		if (imgselected.length !=  0){
+			takepicture(1);
+			ev.preventDefault();
+		}else{
+			alert("Please select one or more stickers first :)");
+			ev.preventDefault();
+		}
 	}, false);
 	
 	clearpicture();
@@ -124,18 +129,18 @@
 			newcanvas.height = height;
 			canvas.width = width;
 			canvas.height = height;
-			if (nb == 1){
-				if (width && height) {
-					photo.width = width;
-					photo.height = height;
-					newcanvas.getContext("2d").drawImage(video, 0, 0, width, height);
-					var pic = newcanvas.toDataURL("image/png");
-					photo.setAttribute("src", pic);
-					imgdata = pic;
-				}else{
-					clearpicture();
-				}
-			}else{
+			if (nb == 0){
+			// 	if (width && height) {
+			// 		photo.width = width;
+			// 		photo.height = height;
+			// 		newcanvas.getContext("2d").drawImage(video, 0, 0, width, height);
+			// 		var pic = newcanvas.toDataURL("image/png");
+			// 		photo.setAttribute("src", pic);
+			// 		imgdata = pic;
+			// 	}else{
+			// 		clearpicture();
+			// 	}
+			// }else{
 				var image = new Image();
 				image.src = upload;
 				image.onload = function(){
@@ -180,6 +185,7 @@
 	}
 
 	savebutton.addEventListener("click", function(ev){
+		if (imgdata != 0){
 		var picdata = imgdata.replace("data:image/png;base64,", "");
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", "../srcs/saveImg.php", true);
@@ -191,7 +197,10 @@
 				addMini(res['id_pic'], imgdata);
 			}
 		}
-		ev.preventDefault();
+		ev.preventDefault();}
+		else{
+			alert("Please take a picture or upload a picture first :)");
+		}
 	}, false);
 
 	function addMini(id_pic, imgdata){

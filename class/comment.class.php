@@ -41,7 +41,8 @@ class Comments {
 				$request = $this->db->prepare("SELECT * FROM `users` WHERE `login` = ?");
 				$response = $request->execute(array($img['login']));
 				$user = $request->fetch(PDO::FETCH_ASSOC);
-				require '../srcs/sendEmailFromCmt.php';
+				if ($user['notification'] == 1)
+					require '../srcs/sendEmailFromCmt.php';
 			}
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());

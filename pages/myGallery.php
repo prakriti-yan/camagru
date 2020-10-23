@@ -23,7 +23,7 @@ if (!isset($_SESSION['loggedInUser']))
 		<?php
 		require '../class/image.class.php';
 		$db = new Images("", "", $_SESSION['loggedInUser']);
-		$nb = 3;
+		$nb = 5;
 		$page = isset($_GET['page']) ? $_GET['page'] : 1;
 		$nbOfImg = $db->countNBByLogin();
 		$nbOfPage = ceil($nbOfImg / $nb);

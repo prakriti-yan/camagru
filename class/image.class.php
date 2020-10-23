@@ -33,6 +33,16 @@ class Images {
 	}
 
 	
+	public function getLoginByImg(){
+		try{
+			$request = $this->db->prepare("SELECT * FROM `images` WHERE `id_pic` = ? ");
+			$response = $request->execute(array($this->id_pic));
+			$img = $request->fetchAll(PDO::FETCH_ASSOC);
+			return $img['login'];
+		}catch(PDOException $e){
+			die('Error: '.$e->getMessage());
+		}
+	}
 	
 
 	public function addImg(){

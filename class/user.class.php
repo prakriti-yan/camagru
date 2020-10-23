@@ -9,9 +9,11 @@ class Users {
 	private $old_pwd;
 	private $email;
 	private $token;
+	private $notification;
 	public $msg;
+	
 
-	public function __construct($login, $pwd, $pwdVerif, $old_pwd, $email, $token){
+	public function __construct($login, $pwd, $pwdVerif, $old_pwd, $email, $token, $notification){
 		try {
 			require '../config/database.php';
 			$this->db = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
@@ -22,6 +24,7 @@ class Users {
 			$this->old_pwd = $old_pwd;
 			$this->email = $email;
 			$this->token = $token;
+			$this->notification = $notification;
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());
 		}
@@ -96,6 +99,8 @@ class Users {
 		$date_create = date("Y-m-d H:i:s");
 		$date_expire = date("Y-m-d H:i:s", strtotime($date_create . ' + 3 days'));
 		try{
+			// $request = $this->db->prepare("INSERT INTO `users` (`login`, `password`, `email`, `date_creation`, `token`, `token_expires`, `notification`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			// $request->execute(array($this->login, hash('whirlpool', $this->pwd), $this->email, $date_create, $token, $date_expire, $this->notification));
 			$request = $this->db->prepare("INSERT INTO `users` (`login`, `password`, `email`, `date_creation`, `token`, `token_expires`) VALUES (?, ?, ?, ?, ?, ?)");
 			$request->execute(array($this->login, hash('whirlpool', $this->pwd), $this->email, $date_create, $token, $date_expire));
 			$request = $this->db->prepare("DELETE FROM `users` WHERE `token_expires` < NOW() AND `confirm` = 0");
@@ -176,8 +181,13 @@ class Users {
 			$user = $this->getEmail();
 			if ($user && $user['login'] != $old_login)
 				return $this->msg = "This email has already been taken, please choose another one!";
-			$request = $this->db->prepare(" UPDATE `users` SET `login` = ?,  `password` = ?, `email` = ? WHERE `id_user` = ?");
-			$response = $request->execute(array($this->login, hash('whirlpool', $this->pwd), $this->email, $user['id_user']));	
+			if ($this->notification == "no"){
+				$request = $this->db->prepare(" UPDATE `users` SET `login` = ?,  `password` = ?, `email` = ?, `notification` = ? WHERE `id_user` = ?");
+				$response = $request->execute(array($this->login, hash('whirlpool', $this->pwd), $this->email, 0, $user['id_user']));
+			}else if ($this->notification == "yes"){
+				$request = $this->db->prepare(" UPDATE `users` SET `login` = ?,  `password` = ?, `email` = ?, `notification` = ?  WHERE `id_user` = ?");
+				$response = $request->execute(array($this->login, hash('whirlpool', $this->pwd), $this->email, 1, $user['id_user']));
+			}
 		}catch(PDOException $e){
 			die('Error: '.$e->getMessage());
 		}
@@ -186,6 +196,10 @@ class Users {
 		$_SESSION['loggedInUser'] = $this->login;
 		$_SESSION['email'] = $this->email;
 	}
+
+	// public function resetnotification($value){
+	// 	$this->notification = $value;
+	// }
 
 }
 

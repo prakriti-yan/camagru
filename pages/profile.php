@@ -27,26 +27,31 @@
 			<table border="0" align="center" cellpadding="5">
 			<tr>
 				<td align="right">Login: </td>
-				<td><input type="TEXT" name="new_login" id="login" required /></td>
+				<td align="left"><input type="TEXT" name="new_login" id="login" required /></td>
 			</tr>
 			<tr>
 				<td align="right">Email: </td>
-				<td><input type="TEXT" name="new_email" id="email" required /></td>
+				<td align="left"><input type="TEXT" name="new_email" id="email" required /></td>
 			</tr>
 			<tr>
 				<td align="right">New password: </td>
-				<td><input type="PASSWORD" name="new_pwd" ></td>
+				<td align="left"><input type="PASSWORD" name="new_pwd" ></td>
 			</tr>
 			<tr>
 				<td align="right">Repeat new password: </td>
-				<td><input type="PASSWORD" name="new_pwdVerif" ></td>
+				<td align="left"><input type="PASSWORD" name="new_pwdVerif" ></td>
+			</tr>
+			<tr>
+				<td align="right">Notification setting: </td>
+				<td align="left"><input type="checkbox" name="notification" value="yes" /><label for="notification">Receive emails upon comment to your posts</label></td>
 			</tr>
 			<tr>
 				<td align="right">Confirm with old password: </td>
-				<td><input type="PASSWORD" name="old_pwd" required/></td>
+				<td align="left"><input type="PASSWORD" name="old_pwd" required/></td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><input type="SUBMIT" name="new_submit" value="OK" required/></td>
+				<td align="right"> </td>
+				<td colspan="2" align="left"><input type="SUBMIT" name="new_submit" value="OK" required/></td>
 			</tr>
 			</table>
 		</form>
@@ -61,7 +66,12 @@
     && !empty(htmlentities($_POST['new_email'])) && $_POST['new_submit'] == "OK"){
 		$new_login = trim($_POST['new_login']);
 		$new_email = trim(htmlentities($_POST['new_email']));
-		$db = new Users($new_login, $_POST['new_pwd'], $_POST['new_pwdVerif'],$_POST['old_pwd'], $new_email, "");
+		if (!isset($_POST['notification']))
+			$db = new Users($new_login, $_POST['new_pwd'], $_POST['new_pwdVerif'],$_POST['old_pwd'], $new_email, "", "no");
+		else
+			$db = new Users($new_login, $_POST['new_pwd'], $_POST['new_pwdVerif'],$_POST['old_pwd'], $new_email, "", "yes");
+		// print_r($_POST);
+		// print_r($db);
 		$db->updateProfile();
 		if (($db->msg) !== null){
 			echo '<div style="color:red;">' . $db->msg . '</div>';
